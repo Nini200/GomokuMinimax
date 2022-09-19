@@ -67,4 +67,8 @@ public class Board {
             System.out.println();
         }
     }
+
+    public void revertMove(Coordinates c) {
+        this.boardMatrix[c.x][c.y] = Stone.BLANK;
+    }
 }

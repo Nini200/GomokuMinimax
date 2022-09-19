@@ -1,7 +1,7 @@
 package Minimax;
 
-import Board.Board;
+import Board.*;
 
 public interface IHeuristics {
-    int evaluate(int depth, int maxColor, Board board);
+    MinimaxResult evaluate(Stone maxColor, boolean isMax, Board board);
 }
