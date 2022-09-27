@@ -15,33 +15,63 @@ public class Minimax {
         this.heuristics = heuristics;
     }
 
-    public MinimaxResult minimax(Board board, Stone color, boolean isMax, int depth){
+    private int innerMinimax(Board board, Stone color, boolean isMax, int depth){
         if(depth == 0 || isGameOver){
-            return heuristics.evaluate(color, isMax, board);
+            return board.evaluate(this.heuristics, color);
         }
         ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
-        MinimaxResult tempResult;
+        int tempResult;
         if (isMax){
-            MinimaxResult maxResult = new MinimaxResult(Integer.MIN_VALUE, possibleMoves.get(0));
+            int maxResult = Integer.MIN_VALUE;
             for (Coordinates c : possibleMoves) {
                 board.makeMove(c,color);
-                tempResult = minimax(board, color.opposite(), false, depth-1);
+                tempResult = innerMinimax(board, color.opposite(), false, depth-1);
                 board.revertMove(c);
-                if(tempResult.getScore() > maxResult.getScore() ){
+                if(tempResult > maxResult){
                     maxResult = tempResult;
                 }
             }
             return maxResult;
         }
-        MinimaxResult minResult = new MinimaxResult(Integer.MAX_VALUE, possibleMoves.get(0));
+        int minResult = Integer.MAX_VALUE;
         for (Coordinates c : possibleMoves) {
             board.makeMove(c, color);
-            tempResult = minimax(board, color.opposite(), true, depth - 1);
+            tempResult = innerMinimax(board, color.opposite(), true, depth - 1);
             board.revertMove(c);
-            if (tempResult.getScore() < minResult.getScore()) {
+            if (tempResult < minResult) {
                 minResult = tempResult;
             }
         }
         return minResult;
+    }
+
+    public Coordinates minimax(Board board, Stone color, boolean isMax, int depth){
+        ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
+        int tempResult;
+        Coordinates bestCoords = possibleMoves.get(0);
+        if (isMax){
+            int maxResult = Integer.MIN_VALUE;
+            for (Coordinates c : possibleMoves) {
+                board.makeMove(c,color);
+                tempResult = innerMinimax(board, color.opposite(), false, depth-1);
+                board.revertMove(c);
+                if(tempResult > maxResult){
+                    maxResult = tempResult;
+                    bestCoords = c;
+                }
+            }
+            return bestCoords;
+        }
+        int minResult = Integer.MAX_VALUE;
+        for (Coordinates c : possibleMoves) {
+            board.makeMove(c, color);
+            tempResult = innerMinimax(board, color.opposite(), true, depth - 1);
+            board.revertMove(c);
+            if (tempResult < minResult) {
+                minResult = tempResult;
+                bestCoords = c;
+            }
+        }
+        return bestCoords;
     }
 }

@@ -1,5 +1,7 @@
 package Board;
 
+import Minimax.IHeuristics;
+
 import java.util.ArrayList;
 
 public class Board {
@@ -70,5 +72,9 @@ public class Board {
 
     public void revertMove(Coordinates c) {
         this.boardMatrix[c.x][c.y] = Stone.BLANK;
+    }
+
+    public int evaluate(IHeuristics heuristics, Stone color){
+        return 0;
     }
 }
