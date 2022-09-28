@@ -283,7 +283,13 @@ public class Board {
         countDiagonallyDown(cs, color);
         countDiagonallyUp(cs, color);
     }
-    public int evaluate(IHeuristics heuristics, Stone color){
-        return 0;
+    public int evaluate(IHeuristics heuristics, Stone color, boolean isMax){
+        ConsecutiveStones cs = new ConsecutiveStones();
+        countAll(cs, color);
+        int evaluation = heuristics.evaluate(cs);
+        if(isMax){
+            return evaluation;
+        }
+        return -evaluation;
     }
 }

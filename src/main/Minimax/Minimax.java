@@ -17,7 +17,7 @@ public class Minimax {
 
     private int innerMinimax(Board board, Stone color, boolean isMax, int depth){
         if(depth == 0 || isGameOver){
-            return board.evaluate(this.heuristics, color);
+            return board.evaluate(this.heuristics, color, isMax);
         }
         ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
         int tempResult;
