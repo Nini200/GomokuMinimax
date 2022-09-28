@@ -3,10 +3,25 @@ package Board;
 public class UnitTestMain {
     public static void main(String[] args) {
         Board board = makeTestBoard();
+        ConsecutiveStones cs = new ConsecutiveStones();
+        board.countHorizontally(cs, Stone.WHITE);
+        System.out.print(cs.getThreesOneEdge());
+        System.out.print(cs.getThreesTwoEdges());
+        System.out.print(cs.getFoursOneEdge());
+        System.out.print(cs.getFoursTwoEdges());
+        System.out.print(cs.getFives());
         board.printBoard();
     }
 
-    private static int[][][] testBoardMatrixData = {
+
+    static boolean compareConsecutiveStones(ConsecutiveStones cs1, ConsecutiveStones cs2){
+        return cs1.getFives() == cs2.getFives()
+                && cs1.getFoursTwoEdges() == cs2.getFoursTwoEdges()
+                && cs1.getFoursOneEdge() == cs2.getFoursOneEdge()
+                && cs1.getThreesTwoEdges() == cs2.getThreesTwoEdges()
+                && cs1.getThreesOneEdge() == cs2.getThreesOneEdge();
+    }
+    private static final int[][][] testBoardMatrixData = {
             // Black stones
             {
                     {0, 0}, {0, 2}, {0, 5},

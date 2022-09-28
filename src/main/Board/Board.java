@@ -17,7 +17,6 @@ public class Board {
     public void makeMove(Coordinates c, Stone stone) {
         this.boardMatrix[c.x][c.y] = stone;
     }
-    // TODO: Implement revertMove?
 
     public Stone[][] getBoardMatrix() {
         return boardMatrix;
@@ -104,7 +103,7 @@ public class Board {
     public int countDiagonalLineDown(int i, int j, Stone color){
         int count = 1;
         while (i < boardSize && j < boardSize) {
-            if (j + 1 == boardSize || i + 1 == boardSize || boardMatrix[i][j] != color) {
+            if (j + 1 == boardSize || i + 1 == boardSize || boardMatrix[i+1][j+1] != color) {
                 j = boardSize;
             } else {
                 count++;
@@ -152,6 +151,7 @@ public class Board {
                     j++;
                 }
             }
+            j=0;
             i++;
         }
     }
