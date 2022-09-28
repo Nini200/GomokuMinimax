@@ -135,7 +135,38 @@ public class BoardTest extends TestCase {
         Assert.assertTrue(areEqual);
     }
 
+    public void testCountVertically() {
+        ConsecutiveStones expected = new ConsecutiveStones(2,0,0,0,0);
+        ConsecutiveStones actualCS = new ConsecutiveStones();
+        testBoard.countVertically(actualCS,Stone.BLACK);
+        boolean areEqual = compareConsecutiveStones(expected,actualCS);
+        Assert.assertTrue(areEqual);
+    }
+
     public void testEvaluate() {
     }
 
+    public void testCountDiagonallyDown() {
+        ConsecutiveStones expected = new ConsecutiveStones(0,0,1,0,0);
+        ConsecutiveStones actualCS = new ConsecutiveStones();
+        testBoard.countDiagonallyDown(actualCS,Stone.WHITE);
+        boolean areEqual = compareConsecutiveStones(expected,actualCS);
+        Assert.assertTrue(areEqual);
+    }
+
+    public void testCountDiagonallyUp() {
+        ConsecutiveStones expected = new ConsecutiveStones(0,0,0,1,0);
+        ConsecutiveStones actualCS = new ConsecutiveStones();
+        testBoard.countDiagonallyUp(actualCS,Stone.BLACK);
+        boolean areEqual = compareConsecutiveStones(expected,actualCS);
+        Assert.assertTrue(areEqual);
+    }
+
+    public void testCountAll() {
+        ConsecutiveStones expected = new ConsecutiveStones(3,0,0,1,1);
+        ConsecutiveStones actualCS = new ConsecutiveStones();
+        testBoard.countAll(actualCS,Stone.BLACK);
+        boolean areEqual = compareConsecutiveStones(expected,actualCS);
+        Assert.assertTrue(areEqual);
+    }
 }

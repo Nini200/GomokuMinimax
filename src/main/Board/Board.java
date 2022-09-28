@@ -156,6 +156,133 @@ public class Board {
         }
     }
 
+    public void countVertically(ConsecutiveStones cs, Stone color){
+        int i = 0;
+        int j = 0;
+        while (j<boardSize){
+            while (i<boardSize){
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (i == 0 || boardMatrix[i - 1][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countVerticalLine(i, j, color);
+                    i += stones;
+                    if (i >= boardSize || boardMatrix[i][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addConsecutiveStones(stones,openEnds);
+                }
+                else {
+                    i++;
+                }
+            }
+            i = 0;
+            j++;
+        }
+
+    }
+
+    public void countDiagonallyDown(ConsecutiveStones cs, Stone color) {
+        for (int ii = boardSize - 1; ii > 0; ii--) {
+            int i = ii;
+            int j = 0;
+            while (i < boardSize) {
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (j == 0 || boardMatrix[i - 1][j - 1] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineDown(i, j, color);
+                    i += stones;
+                    j += stones;
+                    if (i == boardSize || boardMatrix[i][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addConsecutiveStones(stones, openEnds);
+                } else {
+                    i++;
+                    j++;
+                }
+            }
+        }
+        for (int jj = 0; jj < boardSize; jj++) {
+            int i = 0;
+            int j = jj;
+            while (j<boardSize){
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (i == 0 || boardMatrix[i - 1][j - 1] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineDown(i, j, color);
+                    i += stones;
+                    j += stones;
+                    if (j == boardSize || boardMatrix[i][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addConsecutiveStones(stones, openEnds);
+                } else {
+                    i++;
+                    j++;
+                }
+            }
+
+        }
+    }
+    public void countDiagonallyUp(ConsecutiveStones cs, Stone color) {
+        for (int ii = 0; ii < boardSize; ii++) {
+            int i = ii;
+            int j = 0;
+            while (i > 0) {
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (j == 0 || boardMatrix[i + 1][j - 1] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineUp(i, j, color);
+                    i -= stones;
+                    j += stones;
+                    if (i == -1 || boardMatrix[i][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addConsecutiveStones(stones, openEnds);
+                } else {
+                    i--;
+                    j++;
+                }
+            }
+        }
+        for (int jj = 1; jj < boardSize; jj++) {
+            int i = boardSize - 1;
+            int j = jj;
+            while (j < boardSize) {
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (i == boardSize - 1 || boardMatrix[i + 1][j - 1] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineUp(i, j, color);
+                    i -= stones;
+                    j += stones;
+                    if (j == boardSize || boardMatrix[i][j] != Stone.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addConsecutiveStones(stones, openEnds);
+                } else {
+                    i--;
+                    j++;
+                }
+            }
+
+        }
+    }
+    public void countAll(ConsecutiveStones cs, Stone color){
+        countHorizontally(cs, color);
+        countVertically(cs, color);
+        countDiagonallyDown(cs, color);
+        countDiagonallyUp(cs, color);
+    }
     public int evaluate(IHeuristics heuristics, Stone color){
         return 0;
     }
