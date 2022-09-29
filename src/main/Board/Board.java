@@ -292,4 +292,48 @@ public class Board {
         }
         return -evaluation;
     }
+
+    public boolean makesFiveHorizontally(Coordinates c, Stone color){
+        int i = c.x;
+        int j = c.y;
+        int lookBack = 0;
+        while (j - lookBack > 0 && boardMatrix[i][j - lookBack - 1] == color) {
+            lookBack++;
+        }
+        for (int jj = 1; jj < 5 - lookBack; jj++) {
+            if (j + jj == boardSize || boardMatrix[i][j + jj] != color) {
+                return false;
+            }
+        }
+        return j + 5 - lookBack == boardSize || boardMatrix[i][j + 5 - lookBack] != color;
+    }
+    public boolean makesFiveVertically(Coordinates c, Stone color) {
+        int i = c.x;
+        int j = c.y;
+        int lookUp = 0;
+        while (i - lookUp > 0 && boardMatrix[i - lookUp - 1][j] == color) {
+            lookUp++;
+        }
+        for (int ii = 1; ii < 5 - lookUp; ii++) {
+            if (i + ii == boardSize || boardMatrix[i + ii][j] != color) {
+                return false;
+            }
+        }
+        return i + 5 - lookUp == boardSize || boardMatrix[i + 5 - lookUp][j] != color;
+    }
+
+    public boolean makesFiveDiagonallyUp(Coordinates c, Stone color) {
+        int i = c.x;
+        int j = c.y;
+        int lookLeftDown = 0;
+        while (i + lookLeftDown < boardSize - 1 && j - lookLeftDown > 0 && boardMatrix[i + lookLeftDown + 1][j - lookLeftDown - 1] == color) {
+            lookLeftDown++;
+        }
+        for (int ij = 1; ij < 5 - lookLeftDown; ij++) {
+            if (i - ij == -1 || j + ij == boardSize || boardMatrix[i - ij][j + ij] != color) {
+                return false;
+            }
+        }
+        return i - 5 + lookLeftDown == -1 || j + 5 - lookLeftDown == boardSize || boardMatrix[i - 5 + lookLeftDown][j + 5 - lookLeftDown] != color;
+    }
 }

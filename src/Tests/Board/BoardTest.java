@@ -3,19 +3,19 @@ package Board;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
-import static Board.UnitTestMain.compareConsecutiveStones;
-import static Board.UnitTestMain.makeTestBoard;
+import static Board.UnitTestMain.*;
 
 public class BoardTest extends TestCase {
 
-    private Board testBoard = makeTestBoard();
+    private Board testBoard = makeBasicTestBoard();
+    private final Board testFiveBoard = makeFivesTestBoard();
 
     public void testMakeMove() {
         Stone expectedStone = Stone.BLACK;
         testBoard.makeMove(new Coordinates(3,4), expectedStone);
         Stone actualStone = testBoard.getBoardMatrix()[3][4];
         Assert.assertEquals(expectedStone,actualStone);
-        testBoard = makeTestBoard();
+        testBoard = makeBasicTestBoard();
 
     }
 
@@ -36,7 +36,7 @@ public class BoardTest extends TestCase {
         testBoard.revertMove(new Coordinates(6,6));
         Stone actualStone = testBoard.getBoardMatrix()[6][6];
         Assert.assertEquals(expectedStone,actualStone);
-        testBoard = makeTestBoard();
+        testBoard = makeBasicTestBoard();
     }
 
     public void testCountHorizontalLine() {
@@ -168,5 +168,50 @@ public class BoardTest extends TestCase {
         testBoard.countAll(actualCS,Stone.BLACK);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
         Assert.assertTrue(areEqual);
+    }
+
+    public void testMakesFiveHorizontally() {
+        boolean makesFive = testFiveBoard.makesFiveHorizontally(new Coordinates(2,3), Stone.WHITE);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveHorizontallyRight() {
+        boolean makesFive = testFiveBoard.makesFiveHorizontally(new Coordinates(5,5), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveHorizontallyNot() {
+        boolean makesFive = testFiveBoard.makesFiveHorizontally(new Coordinates(7,3), Stone.BLACK);
+        Assert.assertFalse(makesFive);
+    }
+    public void testMakesFiveVertically() {
+        boolean makesFive = testFiveBoard.makesFiveVertically(new Coordinates(4,1), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveVerticallyUp() {
+        boolean makesFive = testFiveBoard.makesFiveVertically(new Coordinates(1,2), Stone.WHITE);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveVerticallyDown() {
+        boolean makesFive = testFiveBoard.makesFiveVertically(new Coordinates(5,7), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveVerticallyNot() {
+        boolean makesFive = testFiveBoard.makesFiveVertically(new Coordinates(7,0), Stone.WHITE);
+        Assert.assertFalse(makesFive);
+    }
+    public void testMakesFiveDiagonallyUp() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyUp(new Coordinates(6,1), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveDiagonallyUpRightUpper() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyUp(new Coordinates(2,6), Stone.WHITE);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveDiagonallyUpLeftLower() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyUp(new Coordinates(6,5), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveDiagonallyUpNot() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyUp(new Coordinates(6,3), Stone.BLACK);
+        Assert.assertFalse(makesFive);
     }
 }
