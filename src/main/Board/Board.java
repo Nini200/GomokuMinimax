@@ -350,4 +350,12 @@ public class Board {
         }
         return i + 5 - lookLeftUp == boardSize || j + 5 - lookLeftUp == boardSize || boardMatrix[i + 5 - lookLeftUp][j + 5 - lookLeftUp] != color;
     }
+
+    public boolean makesFive(Coordinates c, Stone color) {
+        return makesFiveHorizontally(c, color)
+                || makesFiveVertically(c, color)
+                || makesFiveDiagonallyUp(c, color)
+                || makesFiveDiagonallyDown(c, color);
+    }
+
 }
