@@ -336,4 +336,18 @@ public class Board {
         }
         return i - 5 + lookLeftDown == -1 || j + 5 - lookLeftDown == boardSize || boardMatrix[i - 5 + lookLeftDown][j + 5 - lookLeftDown] != color;
     }
+    public boolean makesFiveDiagonallyDown(Coordinates c, Stone color) {
+        int i = c.x;
+        int j = c.y;
+        int lookLeftUp = 0;
+        while (i - lookLeftUp > 0 && j - lookLeftUp > 0 && boardMatrix[i - lookLeftUp - 1][j - lookLeftUp - 1] == color) {
+            lookLeftUp++;
+        }
+        for (int ij = 1; ij < 5 - lookLeftUp; ij++) {
+            if (i + ij == boardSize || j + ij == boardSize || boardMatrix[i + ij][j + ij] != color) {
+                return false;
+            }
+        }
+        return i + 5 - lookLeftUp == boardSize || j + 5 - lookLeftUp == boardSize || boardMatrix[i + 5 - lookLeftUp][j + 5 - lookLeftUp] != color;
+    }
 }

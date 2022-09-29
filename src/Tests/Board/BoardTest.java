@@ -214,4 +214,16 @@ public class BoardTest extends TestCase {
         boolean makesFive = testFiveBoard.makesFiveDiagonallyUp(new Coordinates(6,3), Stone.BLACK);
         Assert.assertFalse(makesFive);
     }
+    public void testMakesFiveDiagonallyDown() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyDown(new Coordinates(5,4), Stone.BLACK);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveDiagonallyDownLeftUpper() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyDown(new Coordinates(2,2), Stone.WHITE);
+        Assert.assertTrue(makesFive);
+    }
+    public void testMakesFiveDiagonallyDownNot() {
+        boolean makesFive = testFiveBoard.makesFiveDiagonallyDown(new Coordinates(6,3), Stone.BLACK);
+        Assert.assertFalse(makesFive);
+    }
 }
