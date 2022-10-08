@@ -1,5 +1,8 @@
 package Board;
 
+import Game.PlayerGame;
+import Minimax.TestHeuristics;
+
 public class UnitTestMain {
     public static void main(String[] args) {
         Board board = makeBasicTestBoard();
@@ -14,6 +17,8 @@ public class UnitTestMain {
         System.out.println();
         board = makeFivesTestBoard();
         board.printBoard();
+        PlayerGame playerGame = new PlayerGame(new TestHeuristics(), 9);
+        playerGame.run();
     }
 
 
@@ -22,7 +27,9 @@ public class UnitTestMain {
                 && cs1.getFoursTwoEdges() == cs2.getFoursTwoEdges()
                 && cs1.getFoursOneEdge() == cs2.getFoursOneEdge()
                 && cs1.getThreesTwoEdges() == cs2.getThreesTwoEdges()
-                && cs1.getThreesOneEdge() == cs2.getThreesOneEdge();
+                && cs1.getThreesOneEdge() == cs2.getThreesOneEdge()
+                && cs1.getTwosTwoEdges() == cs2.getTwosTwoEdges()
+                && cs1.getTwosOneEdge() == cs2.getTwosOneEdge();
     }
     private static final int[][][] testBoardMatrixData = {
             // Black stones

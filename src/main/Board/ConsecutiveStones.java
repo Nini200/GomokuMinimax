@@ -1,6 +1,8 @@
 package Board;
 
 public class ConsecutiveStones {
+    private int twosOneEdge;
+    private int twosTwoEdges;
     private int threesOneEdge;
     private int threesTwoEdges;
     private int foursOneEdge;
@@ -11,7 +13,9 @@ public class ConsecutiveStones {
         threesOneEdge=threesTwoEdges=foursOneEdge=foursTwoEdges=fives=0;
     }
 
-    public ConsecutiveStones(int threesOneEdge, int threesTwoEdges, int foursOneEdge, int foursTwoEdges, int fives){
+    public ConsecutiveStones(int twosOneEdge, int twosTwoEdges, int threesOneEdge, int threesTwoEdges, int foursOneEdge, int foursTwoEdges, int fives){
+        this.twosOneEdge = twosOneEdge;
+        this.twosTwoEdges = twosTwoEdges;
         this.threesOneEdge = threesOneEdge;
         this.threesTwoEdges = threesTwoEdges;
         this.foursOneEdge = foursOneEdge;
@@ -36,6 +40,12 @@ public class ConsecutiveStones {
                     case 2 -> threesTwoEdges++;
                 }
                 break;
+            case 2:
+                switch (openEnds) {
+                    case 1 -> twosOneEdge++;
+                    case 2 -> twosTwoEdges++;
+                }
+                break;
         }
     }
 
@@ -58,5 +68,13 @@ public class ConsecutiveStones {
 
     public int getFives() {
         return fives;
+    }
+
+    public int getTwosOneEdge() {
+        return twosOneEdge;
+    }
+
+    public int getTwosTwoEdges() {
+        return twosTwoEdges;
     }
 }

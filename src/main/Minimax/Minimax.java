@@ -8,16 +8,10 @@ import Board.Coordinates;
 import java.util.ArrayList;
 
 public class Minimax {
-    private final IHeuristics heuristics;
-    private boolean isGameOver = false;
 
-    public Minimax(IHeuristics heuristics){
-        this.heuristics = heuristics;
-    }
-
-    private int innerMinimax(Board board, Stone color, boolean isMax, int depth){
-        if(depth == 0 || isGameOver){
-            return board.evaluate(this.heuristics, color, isMax);
+    private static int innerMinimax(Board board, Stone color, boolean isMax, int depth, IHeuristics heuristics){
+        if(depth == 0){
+            return board.evaluate(heuristics, color, isMax);
         }
         ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
         int tempResult;
@@ -25,7 +19,7 @@ public class Minimax {
             int maxResult = Integer.MIN_VALUE;
             for (Coordinates c : possibleMoves) {
                 board.makeMove(c,color);
-                tempResult = innerMinimax(board, color.opposite(), false, depth-1);
+                tempResult = innerMinimax(board, color.opposite(), false, depth-1, heuristics);
                 board.revertMove(c);
                 if(tempResult > maxResult){
                     maxResult = tempResult;
@@ -36,7 +30,7 @@ public class Minimax {
         int minResult = Integer.MAX_VALUE;
         for (Coordinates c : possibleMoves) {
             board.makeMove(c, color);
-            tempResult = innerMinimax(board, color.opposite(), true, depth - 1);
+            tempResult = innerMinimax(board, color.opposite(), true, depth - 1, heuristics);
             board.revertMove(c);
             if (tempResult < minResult) {
                 minResult = tempResult;
@@ -45,7 +39,7 @@ public class Minimax {
         return minResult;
     }
 
-    public Coordinates minimax(Board board, Stone color, boolean isMax, int depth){
+    public static Coordinates minimax(Board board, Stone color, boolean isMax, int depth, IHeuristics heuristics){
         ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
         int tempResult;
         Coordinates bestCoords = possibleMoves.get(0);
@@ -53,7 +47,7 @@ public class Minimax {
             int maxResult = Integer.MIN_VALUE;
             for (Coordinates c : possibleMoves) {
                 board.makeMove(c,color);
-                tempResult = innerMinimax(board, color.opposite(), false, depth-1);
+                tempResult = innerMinimax(board, color.opposite(), false, depth-1, heuristics);
                 board.revertMove(c);
                 if(tempResult > maxResult){
                     maxResult = tempResult;
@@ -65,7 +59,7 @@ public class Minimax {
         int minResult = Integer.MAX_VALUE;
         for (Coordinates c : possibleMoves) {
             board.makeMove(c, color);
-            tempResult = innerMinimax(board, color.opposite(), true, depth - 1);
+            tempResult = innerMinimax(board, color.opposite(), true, depth - 1, heuristics);
             board.revertMove(c);
             if (tempResult < minResult) {
                 minResult = tempResult;

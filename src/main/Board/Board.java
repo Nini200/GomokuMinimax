@@ -18,6 +18,8 @@ public class Board {
         this.boardMatrix[c.x][c.y] = stone;
     }
 
+    public void makeMove(int i, int j, Stone stone){this.boardMatrix[i][j] = stone;}
+
     public Stone[][] getBoardMatrix() {
         return boardMatrix;
     }
@@ -284,9 +286,11 @@ public class Board {
         countDiagonallyUp(cs, color);
     }
     public int evaluate(IHeuristics heuristics, Stone color, boolean isMax){
-        ConsecutiveStones cs = new ConsecutiveStones();
-        countAll(cs, color);
-        int evaluation = heuristics.evaluate(cs);
+        ConsecutiveStones playersCs = new ConsecutiveStones();
+        ConsecutiveStones opponentsCs = new ConsecutiveStones();
+        countAll(playersCs, color);
+        countAll(opponentsCs, color.opposite());
+        int evaluation = heuristics.evaluate(playersCs, opponentsCs);
         if(isMax){
             return evaluation;
         }
@@ -356,6 +360,11 @@ public class Board {
                 || makesFiveVertically(c, color)
                 || makesFiveDiagonallyUp(c, color)
                 || makesFiveDiagonallyDown(c, color);
+    }
+
+    public boolean makesFive(int i, int j, Stone color){
+        Coordinates c = new Coordinates(i, j);
+        return makesFive(c, color);
     }
 
 }

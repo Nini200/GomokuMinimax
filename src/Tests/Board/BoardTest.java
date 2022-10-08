@@ -128,7 +128,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testCountHorizontally() {
-        ConsecutiveStones expected = new ConsecutiveStones(0,1,0,0,0);
+        ConsecutiveStones expected = new ConsecutiveStones(1,0,0,1,0,0,0);
         ConsecutiveStones actualCS = new ConsecutiveStones();
         testBoard.countHorizontally(actualCS,Stone.WHITE);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
@@ -136,7 +136,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testCountVertically() {
-        ConsecutiveStones expected = new ConsecutiveStones(2,0,0,0,0);
+        ConsecutiveStones expected = new ConsecutiveStones(0,0,2,0,0,0,0);
         ConsecutiveStones actualCS = new ConsecutiveStones();
         testBoard.countVertically(actualCS,Stone.BLACK);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
@@ -147,7 +147,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testCountDiagonallyDown() {
-        ConsecutiveStones expected = new ConsecutiveStones(0,0,1,0,0);
+        ConsecutiveStones expected = new ConsecutiveStones(0,1,0,0,1,0,0);
         ConsecutiveStones actualCS = new ConsecutiveStones();
         testBoard.countDiagonallyDown(actualCS,Stone.WHITE);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
@@ -155,7 +155,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testCountDiagonallyUp() {
-        ConsecutiveStones expected = new ConsecutiveStones(0,0,0,1,0);
+        ConsecutiveStones expected = new ConsecutiveStones(1,2,0,0,0,1,0);
         ConsecutiveStones actualCS = new ConsecutiveStones();
         testBoard.countDiagonallyUp(actualCS,Stone.BLACK);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
@@ -163,7 +163,7 @@ public class BoardTest extends TestCase {
     }
 
     public void testCountAll() {
-        ConsecutiveStones expected = new ConsecutiveStones(3,0,0,1,1);
+        ConsecutiveStones expected = new ConsecutiveStones(3,4,3,0,0,1,1);
         ConsecutiveStones actualCS = new ConsecutiveStones();
         testBoard.countAll(actualCS,Stone.BLACK);
         boolean areEqual = compareConsecutiveStones(expected,actualCS);
