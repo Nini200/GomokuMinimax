@@ -1,4 +1,4 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.StopConditions;
 
 public interface IStopCondition {
     boolean shouldStop();

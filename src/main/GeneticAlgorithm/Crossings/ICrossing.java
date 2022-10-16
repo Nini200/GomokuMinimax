@@ -1,4 +1,4 @@
-package GeneticAlgorithm;
+package GeneticAlgorithm.Crossings;
 
 import Minimax.HeuristicsParameters;
 

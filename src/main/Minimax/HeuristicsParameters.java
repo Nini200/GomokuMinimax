@@ -79,4 +79,23 @@ public class HeuristicsParameters {
                 parameters2.opponentsFoursTwoEdges,
                 parameters2.opponentsFives);
     }
+    public void mutateParameter(int parameterNumber, double size, boolean isNegative){
+        double mutationMultiplier = isNegative ? (1-size) : (1 + size);
+        switch (parameterNumber){
+            case 0 -> this.playersTwosOneEdge = (int)(this.playersTwosOneEdge * mutationMultiplier);
+            case 1 -> this.playersTwosTwoEdges = (int)(this.playersTwosTwoEdges * mutationMultiplier);
+            case 2 -> this.playersThreesOneEdge = (int)(this.playersThreesOneEdge * mutationMultiplier);
+            case 3 -> this.playersThreesTwoEdges = (int)(this.playersThreesTwoEdges * mutationMultiplier);
+            case 4 -> this.playersFoursOneEdge = (int)(this.playersFoursOneEdge * mutationMultiplier);
+            case 5 -> this.playersFoursTwoEdges = (int)(this.playersFoursTwoEdges * mutationMultiplier);
+            case 6 -> this.playersFives = (int)(this.playersFives * mutationMultiplier);
+            case 7 -> this.opponentsTwosOneEdge = (int)(this.opponentsTwosOneEdge * mutationMultiplier);
+            case 8 -> this.opponentsTwosTwoEdges = (int)(this.opponentsTwosTwoEdges * mutationMultiplier);
+            case 9 -> this.opponentsThreesOneEdge = (int)(this.opponentsThreesOneEdge * mutationMultiplier);
+            case 10 -> this.opponentsThreesTwoEdges = (int)(this.opponentsThreesTwoEdges * mutationMultiplier);
+            case 11 -> this.opponentsFoursOneEdge = (int)(this.opponentsFoursOneEdge * mutationMultiplier);
+            case 12 -> this.opponentsFoursTwoEdges = (int)(this.opponentsFoursTwoEdges * mutationMultiplier);
+            case 13 -> this.opponentsFives = (int)(this.opponentsFives * mutationMultiplier);
+        }
+    }
 }
