@@ -1,11 +1,11 @@
 package Board;
 
-public enum Stone {
+public enum Color {
     BLANK,
     BLACK,
     WHITE;
 
-    public Stone opposite() {
+    public Color opposite() {
         if (this == BLACK) return WHITE;
         if (this == WHITE) return BLACK;
         return BLANK;

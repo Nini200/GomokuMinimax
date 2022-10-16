@@ -1,13 +1,14 @@
 package Board;
 
-import Game.PlayerGame;
-import Minimax.TestHeuristics;
+import Game.AIsGame;
+import Game.AIsGameResult;
+import Minimax.GomokuHeuristics;
 
 public class UnitTestMain {
     public static void main(String[] args) {
         Board board = makeBasicTestBoard();
         ConsecutiveStones cs = new ConsecutiveStones();
-        board.countHorizontally(cs, Stone.WHITE);
+        board.countHorizontally(cs, Color.WHITE);
         System.out.print(cs.getThreesOneEdge());
         System.out.print(cs.getThreesTwoEdges());
         System.out.print(cs.getFoursOneEdge());
@@ -17,8 +18,41 @@ public class UnitTestMain {
         System.out.println();
         board = makeFivesTestBoard();
         board.printBoard();
-        PlayerGame playerGame = new PlayerGame(new TestHeuristics(), 9);
-        playerGame.run();
+        //PlayerGame playerGame = new PlayerGame(new TestHeuristics(), 15);
+        //playerGame.run();
+        GomokuHeuristics h1 = new GomokuHeuristics(2,
+                5,
+                50,
+                100,
+                50000,
+                100000,
+                Integer.MAX_VALUE,
+                2,
+                5,
+                50,
+                100,
+                50000,
+                100000,
+                Integer.MAX_VALUE
+                );
+        GomokuHeuristics h2 = new GomokuHeuristics(2,
+                5,
+                50,
+                100,
+                50000,
+                100000,
+                Integer.MAX_VALUE,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                Integer.MAX_VALUE
+        );
+        AIsGame aIsGame = new AIsGame(h1, h2, 15, 3);
+        AIsGameResult winner = aIsGame.run();
+        System.out.println(winner.toString());
     }
 
 
@@ -89,11 +123,11 @@ public class UnitTestMain {
         Board board = new Board(9);
         for (int[] coords : (testMatrixData[0])){
             Coordinates c = new Coordinates(coords[0],coords[1]);
-            board.makeMove(c,Stone.BLACK);
+            board.makeMove(c, Color.BLACK);
         }
         for (int[] coords : (testMatrixData[1])){
             Coordinates c = new Coordinates(coords[0],coords[1]);
-            board.makeMove(c,Stone.WHITE);
+            board.makeMove(c, Color.WHITE);
         }
 
         return board;

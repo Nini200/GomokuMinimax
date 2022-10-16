@@ -1,7 +1,7 @@
 package Game;
 
 import Board.Board;
-import Board.Stone;
+import Board.Color;
 import Board.Coordinates;
 import Minimax.IHeuristics;
 
@@ -14,7 +14,7 @@ public class PlayerGame {
     Board board;
     Scanner in;
     boolean isGameOver = false;
-    Stone winner = Stone.BLANK;
+    Color winner = Color.BLANK;
 
     public PlayerGame(IHeuristics heuristics, int boardSize){
         this.heuristics = heuristics;
@@ -22,30 +22,30 @@ public class PlayerGame {
         this.in = new Scanner(System.in);
     }
 
-    private Stone getPlayersColor(){
+    private Color getPlayersColor(){
         System.out.println("Choose color: (B/W)");
         char choice = in.next().toLowerCase().charAt(0);
         if(choice == 'b'){
-            return Stone.BLACK;
+            return Color.BLACK;
         } else if (choice == 'w') {
-            return Stone.WHITE;
+            return Color.WHITE;
         }
-        return Stone.BLANK;
+        return Color.BLANK;
     }
 
     public void run(){
-        Stone playersColor = getPlayersColor();
+        Color playersColor = getPlayersColor();
 
-        if (playersColor == Stone.BLANK) {
+        if (playersColor == Color.BLANK) {
             System.out.println("Wrong color.");
             return;
         }
 
-        Stone aiColor = playersColor.opposite();
+        Color aiColor = playersColor.opposite();
         System.out.println("Player: " + playersColor);
         System.out.println("Ejaj: " + aiColor.toString());
 
-        if (playersColor == Stone.WHITE) {
+        if (playersColor == Color.WHITE) {
             int centrePoint = (board.getBoardSize() - 1) / 2;
             board.makeMove(new Coordinates(centrePoint,centrePoint), aiColor);
             board.printBoard();
@@ -71,9 +71,9 @@ public class PlayerGame {
                 }
                 board.printBoard();
             }
-            System.out.println("Winner: " + winner.toString());
+            System.out.println();
         }
-
+        System.out.println("Winner: " + winner.toString());
 
     }
 }

@@ -1,7 +1,7 @@
 package Minimax;
 
 import Board.Board;
-import Board.Stone;
+import Board.Color;
 import Board.Coordinates;
 
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Minimax {
 
-    private static int innerMinimax(Board board, Stone color, boolean isMax, int depth, IHeuristics heuristics){
+    private static int innerMinimax(Board board, Color color, boolean isMax, int depth, IHeuristics heuristics){
         if(depth == 0){
             return board.evaluate(heuristics, color, isMax);
         }
@@ -39,8 +39,11 @@ public class Minimax {
         return minResult;
     }
 
-    public static Coordinates minimax(Board board, Stone color, boolean isMax, int depth, IHeuristics heuristics){
+    public static Coordinates minimax(Board board, Color color, boolean isMax, int depth, IHeuristics heuristics){
         ArrayList<Coordinates> possibleMoves = board.getPossibleMoves();
+        if(possibleMoves.isEmpty()){
+            return new Coordinates(-1, -1);
+        }
         int tempResult;
         Coordinates bestCoords = possibleMoves.get(0);
         if (isMax){
