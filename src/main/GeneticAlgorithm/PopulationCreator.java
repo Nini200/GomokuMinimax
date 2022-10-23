@@ -18,8 +18,11 @@ public class PopulationCreator {
         }
     }
     public static HeuristicsParameters[] getRandomPopulation(int populationSize){
-        //TODO
-        return new HeuristicsParameters[populationSize];
+        HeuristicsParameters[] population = new HeuristicsParameters[populationSize];
+        for (int i = 0; i < populationSize; i++) {
+            population[i]=HeuristicsParameters.getRandomParameters(random);
+        }
+        return population;
     }
     public static HeuristicsParameters getChild(HeuristicsParameters parent1,
                                                 HeuristicsParameters parent2,

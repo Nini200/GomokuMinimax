@@ -1,5 +1,7 @@
 package Minimax;
 
+import java.util.Random;
+
 public class HeuristicsParameters {
     int playersTwosOneEdge;
     int playersTwosTwoEdges;
@@ -97,5 +99,22 @@ public class HeuristicsParameters {
             case 12 -> this.opponentsFoursTwoEdges = (int)(this.opponentsFoursTwoEdges * mutationMultiplier);
             case 13 -> this.opponentsFives = (int)(this.opponentsFives * mutationMultiplier);
         }
+    }
+
+    public static HeuristicsParameters getRandomParameters(Random random){
+        return new HeuristicsParameters(random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE,
+                random.nextInt() & Integer.MAX_VALUE);
     }
 }

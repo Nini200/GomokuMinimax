@@ -64,6 +64,7 @@ public class GeneticAlgorithm {
     }
     public HeuristicsParameters run(){
         stopCondition.setup();
+        chooser.setup(populationSize);
         int [] evaluation = evaluator.evaluate(population);
         while (!stopCondition.shouldStop()){
             chooser.updateChooser(evaluation);
