@@ -19,6 +19,8 @@ public class UnitTestMain {
                 0.1);
         HeuristicsParameters best = geneticAlgorithm.run();
         best.print();
+        /*PlayerGame game = new PlayerGame(new TestHeuristics(),15);
+        game.run();*/
     }
 
 

@@ -39,7 +39,7 @@ public class AIsGame {
         Color turn = Color.BLACK;
         while (!isGameOver){
             if(firstColor==turn){
-                Coordinates c = minimax(board,firstColor,true,depth,firstHeuristics);
+                Coordinates c = minimax(board,firstColor,true,depth,firstHeuristics, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if(c.x==-1){
                     return AIsGameResult.NONE;
                 }
@@ -50,7 +50,7 @@ public class AIsGame {
                 }
             }
             else {
-                Coordinates c = minimax(board,secondColor,true,depth,secondHeuristics);
+                Coordinates c = minimax(board, secondColor, true, depth, secondHeuristics, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 if(c.x==-1){
                     return AIsGameResult.NONE;
                 }

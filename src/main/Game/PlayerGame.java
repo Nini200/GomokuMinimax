@@ -63,7 +63,7 @@ public class PlayerGame {
                 isGameOver = true;
             }
             else{
-                Coordinates c = minimax(board, aiColor, true, 3, heuristics);
+                Coordinates c = minimax(board, aiColor, true, 3, heuristics, Integer.MIN_VALUE, Integer.MAX_VALUE);
                 board.makeMove(c, aiColor);
                 if(board.makesFive(c, aiColor)){
                     winner = aiColor;
