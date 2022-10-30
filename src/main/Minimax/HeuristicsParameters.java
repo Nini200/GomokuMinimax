@@ -117,4 +117,22 @@ public class HeuristicsParameters {
                 random.nextInt() & Integer.MAX_VALUE,
                 random.nextInt() & Integer.MAX_VALUE);
     }
+
+    public void print(){
+        System.out.println(this.playersTwosOneEdge + "\n"
+                + this.playersTwosTwoEdges + "\n"
+                + this.playersThreesOneEdge + "\n"
+                + this.playersThreesTwoEdges + "\n"
+                + this.playersFoursOneEdge + "\n"
+                + this.playersFoursTwoEdges + "\n"
+                + this.playersFives + "\n"
+                + this.opponentsTwosOneEdge + "\n"
+                + this.opponentsTwosTwoEdges + "\n"
+                + this.opponentsThreesOneEdge + "\n"
+                + this.opponentsThreesTwoEdges + "\n"
+                + this.opponentsFoursOneEdge + "\n"
+                + this.opponentsFoursTwoEdges + "\n"
+                + this.opponentsFives + "\n"
+        );
+    }
 }

@@ -1,58 +1,24 @@
 package Board;
 
-import Game.AIsGame;
-import Game.AIsGameResult;
-import Minimax.GomokuHeuristics;
+import GeneticAlgorithm.Choosers.RouletteChooser;
+import GeneticAlgorithm.Crossings.FirstHalfSwapCrossing;
+import GeneticAlgorithm.Evaluators.GameEvaluator;
+import GeneticAlgorithm.GeneticAlgorithm;
+import GeneticAlgorithm.StopConditions.IterationsStopCondition;
+import Minimax.HeuristicsParameters;
 
 public class UnitTestMain {
     public static void main(String[] args) {
-        Board board = makeBasicTestBoard();
-        ConsecutiveStones cs = new ConsecutiveStones();
-        board.countHorizontally(cs, Color.WHITE);
-        System.out.print(cs.getThreesOneEdge());
-        System.out.print(cs.getThreesTwoEdges());
-        System.out.print(cs.getFoursOneEdge());
-        System.out.print(cs.getFoursTwoEdges());
-        System.out.print(cs.getFives());
-        board.printBoard();
-        System.out.println();
-        board = makeFivesTestBoard();
-        board.printBoard();
-        //PlayerGame playerGame = new PlayerGame(new TestHeuristics(), 15);
-        //playerGame.run();
-        GomokuHeuristics h1 = new GomokuHeuristics(2,
-                5,
-                50,
-                100,
-                50000,
-                100000,
-                Integer.MAX_VALUE,
-                2,
-                5,
-                50,
-                100,
-                50000,
-                100000,
-                Integer.MAX_VALUE
-                );
-        GomokuHeuristics h2 = new GomokuHeuristics(2,
-                5,
-                50,
-                100,
-                50000,
-                100000,
-                Integer.MAX_VALUE,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                Integer.MAX_VALUE
-        );
-        AIsGame aIsGame = new AIsGame(h1, h2, 15, 3);
-        AIsGameResult winner = aIsGame.run();
-        System.out.println(winner.toString());
+        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
+                new FirstHalfSwapCrossing(),
+                new GameEvaluator(),
+                new IterationsStopCondition(15),
+                30,
+                new RouletteChooser(),
+                0.5,
+                0.1);
+        HeuristicsParameters best = geneticAlgorithm.run();
+        best.print();
     }
 
 

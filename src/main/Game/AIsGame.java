@@ -61,8 +61,8 @@ public class AIsGame {
                 }
             }
             turn = turn.opposite();
-            board.printBoard();
-            System.out.println();
+            //board.printBoard();
+            //System.out.println();
         }
         return winner;
     }
