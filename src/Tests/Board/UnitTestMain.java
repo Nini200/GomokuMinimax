@@ -7,6 +7,8 @@ import GeneticAlgorithm.GeneticAlgorithm;
 import GeneticAlgorithm.StopConditions.IterationsStopCondition;
 import Minimax.HeuristicsParameters;
 
+import java.io.IOException;
+
 public class UnitTestMain {
     public static void main(String[] args) {
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
@@ -17,7 +19,13 @@ public class UnitTestMain {
                 new RouletteChooser(),
                 0.5,
                 0.1);
-        HeuristicsParameters best = geneticAlgorithm.run();
+        HeuristicsParameters best = null;
+        try {
+            best = geneticAlgorithm.run("testRun1.txt");
+        } catch (IOException e) {
+            System.err.println("Error writing to log");
+            System.err.println(e.getMessage());
+        }
         best.print();
         /*PlayerGame game = new PlayerGame(new TestHeuristics(),15);
         game.run();*/

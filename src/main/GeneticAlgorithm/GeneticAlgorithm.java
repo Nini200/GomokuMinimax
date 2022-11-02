@@ -6,6 +6,8 @@ import GeneticAlgorithm.Evaluators.IEvaluator;
 import GeneticAlgorithm.StopConditions.IStopCondition;
 import Minimax.HeuristicsParameters;
 
+import java.io.IOException;
+
 public class GeneticAlgorithm {
     ICrossing crossing;
     IEvaluator evaluator;
@@ -62,7 +64,7 @@ public class GeneticAlgorithm {
         }
         return population[parametersIndex];
     }
-    public HeuristicsParameters run(){
+    public HeuristicsParameters run(String logName) throws IOException {
         stopCondition.setup();
         chooser.setup(populationSize);
         int [] evaluation = evaluator.evaluate(population);
@@ -81,6 +83,7 @@ public class GeneticAlgorithm {
                 );
             }
             population = newPopulation;
+            PopulationCreator.writePopulationToFile(population, logName);
             evaluation = evaluator.evaluate(population);
             stopCondition.next();
         }

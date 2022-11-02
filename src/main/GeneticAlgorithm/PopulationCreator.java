@@ -3,6 +3,8 @@ package GeneticAlgorithm;
 import GeneticAlgorithm.Crossings.ICrossing;
 import Minimax.HeuristicsParameters;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class PopulationCreator {
@@ -33,4 +35,20 @@ public class PopulationCreator {
         mutate(newHeuristics, probability, size);
         return newHeuristics;
     }
+
+    public static void writePopulationToFile(HeuristicsParameters[] population, String logName) throws IOException {
+        FileWriter fileWriter = new FileWriter(logName, false);
+        for (HeuristicsParameters parameters : population) {
+            try {
+                fileWriter.append(parameters.toPrint());
+                fileWriter.flush();
+            } catch (IOException e) {
+                System.err.print(e.getMessage());
+            }
+        }
+    }
+
+//    public HeuristicsParameters[] readPopulationFromFile(String fileName, int populationSize) {
+//        Scanner
+//    }
 }

@@ -118,8 +118,8 @@ public class HeuristicsParameters {
                 random.nextInt() & Integer.MAX_VALUE);
     }
 
-    public void print(){
-        System.out.println(this.playersTwosOneEdge + "\n"
+    public String toPrint(){
+        return this.playersTwosOneEdge + "\n"
                 + this.playersTwosTwoEdges + "\n"
                 + this.playersThreesOneEdge + "\n"
                 + this.playersThreesTwoEdges + "\n"
@@ -132,7 +132,9 @@ public class HeuristicsParameters {
                 + this.opponentsThreesTwoEdges + "\n"
                 + this.opponentsFoursOneEdge + "\n"
                 + this.opponentsFoursTwoEdges + "\n"
-                + this.opponentsFives + "\n"
-        );
+                + this.opponentsFives + "\n";
+    }
+    public void print() {
+        System.out.print(this.toPrint());
     }
 }
