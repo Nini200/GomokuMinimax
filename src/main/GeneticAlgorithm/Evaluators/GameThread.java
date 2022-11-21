@@ -33,7 +33,7 @@ public class GameThread extends Thread{
     public void run(){
         GomokuHeuristics heuristics1 = new GomokuHeuristics(parameters1);
         GomokuHeuristics heuristics2 = new GomokuHeuristics(parameters2);
-        AIsGame aIsGame = new AIsGame(heuristics1, heuristics2, 15, 2);
+        AIsGame aIsGame = new AIsGame(heuristics1, heuristics2, 15, 3);
         winner = aIsGame.run();
         done = true;
         System.out.println("Thread " + threadNumber + "done.");

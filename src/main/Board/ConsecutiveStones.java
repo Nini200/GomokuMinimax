@@ -1,13 +1,13 @@
 package Board;
 
 public class ConsecutiveStones {
-    private int twosOneEdge;
-    private int twosTwoEdges;
-    private int threesOneEdge;
-    private int threesTwoEdges;
-    private int foursOneEdge;
-    private int foursTwoEdges;
-    private int fives;
+    int twosOneEdge;
+    int twosTwoEdges;
+    int threesOneEdge;
+    int threesTwoEdges;
+    int foursOneEdge;
+    int foursTwoEdges;
+    int fives;
 
     public ConsecutiveStones(){
         threesOneEdge=threesTwoEdges=foursOneEdge=foursTwoEdges=fives=0;

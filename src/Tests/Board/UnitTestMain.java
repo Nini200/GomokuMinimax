@@ -14,8 +14,8 @@ public class UnitTestMain {
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
                 new FirstHalfSwapCrossing(),
                 new GameEvaluator(),
-                new IterationsStopCondition(15),
-                30,
+                new IterationsStopCondition(30),
+                50,
                 new RouletteChooser(),
                 0.5,
                 0.1);
