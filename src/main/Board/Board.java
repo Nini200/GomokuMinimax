@@ -352,11 +352,22 @@ public class Board {
         countDiagonallyUp(cs, color);
     }
     public int evaluate(IHeuristics heuristics, Color color, boolean isMax){
-        ConsecutiveStones playersCs = new ConsecutiveStones();
-        ConsecutiveStones opponentsCs = new ConsecutiveStones();
-        countAll(playersCs, color);
-        countAll(opponentsCs, color.opposite());
-        int evaluation = heuristics.evaluate(playersCs, opponentsCs);
+        ConsecutiveStonesType csType = heuristics.getConsecutiveStonesType();
+        int evaluation = 0;
+        if (csType == ConsecutiveStonesType.SIMPLE) {
+            ConsecutiveStones playersCs = new ConsecutiveStones();
+            ConsecutiveStones opponentsCs = new ConsecutiveStones();
+            countAll(playersCs, color);
+            countAll(opponentsCs, color.opposite());
+            evaluation = heuristics.evaluate(playersCs, opponentsCs);
+        } else if (csType == ConsecutiveStonesType.ADVANCED) {
+            ConsecutiveAdvStones playersCas = new ConsecutiveAdvStones();
+            ConsecutiveAdvStones opponentsCas = new ConsecutiveAdvStones();
+            countAllAdvanced(playersCas, color);
+            countAllAdvanced(opponentsCas, color.opposite());
+            evaluation = heuristics.evaluateAdvanced(playersCas, opponentsCas);
+        }
+
         if(isMax){
             return evaluation;
         }
@@ -364,7 +375,6 @@ public class Board {
     }
 
     // ------------------------------------------ Advanced Consecutive Stone Counting -----------------//
-
     public void countHorizontallyAdvanced(ConsecutiveAdvStones cs, Color color){
         int i = 0;
         int j = 0;
@@ -1039,5 +1049,347 @@ public class Board {
             }
 
         }
+    }
+    public void countDiagonallyUpAdvanced(ConsecutiveAdvStones cs, Color color) {
+        for (int ii = 0; ii < boardSize; ii++) {
+            int i = ii;
+            int j = 0;
+            while (i > 0) {
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (j == 0 || boardMatrix[i + 1][j - 1] != Color.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineUp(i, j, color);
+
+                    AdvancedStoneShapes shape = AdvancedStoneShapes.NotAdvanced;
+                    int changeIJ = 5; // default if we got any od advancedShapes
+                    // checking for special shapes
+                    if (stones == 3) // O_XXX_O or XXX_X
+                    {
+                        // O_XXX_O
+                        if (i + 2 < boardSize && j - 2 >=0
+                                && i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i + 2][j - 2] == color.opposite()
+                                && boardMatrix[i + 1][j - 1] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == Color.BLANK
+                                && boardMatrix[i - 4][j + 4] == color.opposite()) {
+                            shape = AdvancedStoneShapes.Three2OpenMax5;
+                        }
+                        // XXX_X
+                        else if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 3][j+3] == Color.BLANK
+                                && boardMatrix[i - 4][j+4] == color) {
+                            shape = AdvancedStoneShapes.FourHoleAfter3;
+                        }
+                    }
+                    if (stones == 2) // (XX_XX or XX__X) or (_XX_X_ or _XX_XO or OXX_X_)
+                    {
+                        // (XX_XX or XX__X)
+                        if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 4][j + 4] == color) {
+                            if(boardMatrix[i - 3][j +3] == color){
+                                shape = AdvancedStoneShapes.FourHoleAfter2;
+                            } else if (boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                shape = AdvancedStoneShapes.ThreeHoles2InRow;
+                            }
+                        }
+                        // (_XX_X_ or _XX_XO or OXX_X_)
+                        if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i - 4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked1;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Open2;
+                                }
+                            }
+                            else if (openEnds == 1
+                                    && i - 4 >= 0 && j + 4 < boardSize
+                                    && boardMatrix[i - 4][j + 4] == Color.BLANK){
+                                shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked2;
+                            }
+                        }
+                    }
+                    if(stones == 1){
+                        // X_XXX or X__XX or X_X_X or X___X
+                        if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 4][j + 4] == color
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK) {
+                            if (boardMatrix[i - 3][j + 3] == color) {
+                                if (boardMatrix[i - 2][j + 2] == color) {
+                                    shape = AdvancedStoneShapes.FourHoleAfter3;
+                                }
+                                else if (boardMatrix[i - 2][j + 2] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoles2InRow;
+                                }
+                            }
+                            else if (boardMatrix[i - 3][j + 3] == Color.BLANK){
+                                if (boardMatrix[i - 2][j + 2] == color) {
+                                    shape = AdvancedStoneShapes.ThreeHoles2Separated;
+                                }
+                                else if (boardMatrix[i - 2][j + 2] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn5;
+                                }
+                            }
+                        }
+                        // _X_XX_ or _X_XXO or OX_XX_
+                        else if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == color
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i - 4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked2;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Open2;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked1;
+                                }
+                            }
+                        }
+                        else if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i -4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open1;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open2;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 4 >= 0  && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open1;
+                                }
+                            }
+                        } else if (i - 2 >= 0 && j + 2 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == color) {
+                            if (openEnds == 2) {
+                                if (i - 3 < 0 || j + 3 >= boardSize
+                                        || boardMatrix[i - 3][j + 3] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open1;
+                                    changeIJ = 4;
+                                } else if (i - 3 >= 0 && j + 3 < boardSize
+                                        && boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open2;
+                                    changeIJ = 4;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 3 >= 0 && j + 3 < boardSize
+                                        && boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open1;
+                                    changeIJ = 4;
+                                }
+                            }
+                        }
+                    }
+
+                    if (shape == AdvancedStoneShapes.NotAdvanced) {
+                        i -= stones;
+                        j += stones;
+                    }
+                    else {
+                        i -= changeIJ;
+                        j += changeIJ;
+                    }
+
+                    if (i == -1 || boardMatrix[i][j] != Color.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addAdvancedConsecutiveStones(stones, openEnds, shape);
+                } else {
+                    i--;
+                    j++;
+                }
+            }
+        }
+
+        for (int jj = 1; jj < boardSize; jj++) {
+            int i = boardSize - 1;
+            int j = jj;
+            while (j < boardSize) {
+                if (boardMatrix[i][j] == color) {
+                    int openEnds = 2;
+                    if (i == boardSize - 1 || boardMatrix[i + 1][j - 1] != Color.BLANK) {
+                        openEnds--;
+                    }
+                    int stones = countDiagonalLineUp(i, j, color);
+
+                    AdvancedStoneShapes shape = AdvancedStoneShapes.NotAdvanced;
+                    int changeIJ = 5; // default if we got any od advancedShapes
+                    // checking for special shapes
+                    if (stones == 3) // O_XXX_O or XXX_X
+                    {
+                        // O_XXX_O
+                        if (i + 2 < boardSize && j - 2 >=0
+                                && i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i + 2][j - 2] == color.opposite()
+                                && boardMatrix[i + 1][j - 1] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == Color.BLANK
+                                && boardMatrix[i - 4][j + 4] == color.opposite()) {
+                            shape = AdvancedStoneShapes.Three2OpenMax5;
+                        }
+                        // XXX_X
+                        else if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 3][j+3] == Color.BLANK
+                                && boardMatrix[i - 4][j+4] == color) {
+                            shape = AdvancedStoneShapes.FourHoleAfter3;
+                        }
+                    }
+                    if (stones == 2) // (XX_XX or XX__X) or (_XX_X_ or _XX_XO or OXX_X_)
+                    {
+                        // (XX_XX or XX__X)
+                        if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 4][j + 4] == color) {
+                            if(boardMatrix[i - 3][j +3] == color){
+                                shape = AdvancedStoneShapes.FourHoleAfter2;
+                            } else if (boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                shape = AdvancedStoneShapes.ThreeHoles2InRow;
+                            }
+                        }
+                        // (_XX_X_ or _XX_XO or OXX_X_)
+                        if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i - 4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked1;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Open2;
+                                }
+                            }
+                            else if (openEnds == 1
+                                    && i - 4 >= 0 && j + 4 < boardSize
+                                    && boardMatrix[i - 4][j + 4] == Color.BLANK){
+                                shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked2;
+                            }
+                        }
+                    }
+                    if(stones == 1){
+                        // X_XXX or X__XX or X_X_X or X___X
+                        if (i - 4 >= 0 && j + 4 < boardSize
+                                && boardMatrix[i - 4][j + 4] == color
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK) {
+                            if (boardMatrix[i - 3][j + 3] == color) {
+                                if (boardMatrix[i - 2][j + 2] == color) {
+                                    shape = AdvancedStoneShapes.FourHoleAfter3;
+                                }
+                                else if (boardMatrix[i - 2][j + 2] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoles2InRow;
+                                }
+                            }
+                            else if (boardMatrix[i - 3][j + 3] == Color.BLANK){
+                                if (boardMatrix[i - 2][j + 2] == color) {
+                                    shape = AdvancedStoneShapes.ThreeHoles2Separated;
+                                }
+                                else if (boardMatrix[i - 2][j + 2] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn5;
+                                }
+                            }
+                        }
+                        // _X_XX_ or _X_XXO or OX_XX_
+                        else if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == color
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i - 4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked2;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Open2;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.ThreeHoleAfter2Blocked1;
+                                }
+                            }
+                        }
+                        else if (i - 3 >= 0 && j + 3 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == Color.BLANK
+                                && boardMatrix[i - 3][j + 3] == color) {
+                            if (openEnds == 2) {
+                                if (i -4 < 0 || j + 4 >= boardSize
+                                        || boardMatrix[i - 4][j + 4] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open1;
+                                } else if (i - 4 >= 0 && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open2;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 4 >= 0  && j + 4 < boardSize
+                                        && boardMatrix[i - 4][j + 4] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn4Open1;
+                                }
+                            }
+                        } else if (i - 2 >= 0 && j + 2 < boardSize
+                                && boardMatrix[i - 1][j + 1] == Color.BLANK
+                                && boardMatrix[i - 2][j + 2] == color) {
+                            if (openEnds == 2) {
+                                if (i - 3 < 0 || j + 3 >= boardSize
+                                        || boardMatrix[i - 3][j + 3] == color.opposite()) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open1;
+                                    changeIJ = 4;
+                                } else if (i - 3 >= 0 && j + 3 < boardSize
+                                        && boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open2;
+                                    changeIJ = 4;
+                                }
+                            } else if (openEnds == 1) {
+                                if (i - 3 >= 0 && j + 3 < boardSize
+                                        && boardMatrix[i - 3][j + 3] == Color.BLANK) {
+                                    shape = AdvancedStoneShapes.TwoOn3Open1;
+                                    changeIJ = 4;
+                                }
+                            }
+                        }
+                    }
+
+                    if (shape == AdvancedStoneShapes.NotAdvanced) {
+                        i -= stones;
+                        j += stones;
+                    }
+                    else {
+                        i -= changeIJ;
+                        j += changeIJ;
+                    }
+
+                    if (j == boardSize || boardMatrix[i][j] != Color.BLANK) {
+                        openEnds--;
+                    }
+                    cs.addAdvancedConsecutiveStones(stones, openEnds, shape);
+                } else {
+                    i--;
+                    j++;
+                }
+            }
+
+        }
+    }
+    public void countAllAdvanced(ConsecutiveAdvStones cs, Color color){
+        countHorizontallyAdvanced(cs, color);
+        countVerticallyAdvanced(cs, color);
+        countDiagonallyDownAdvanced(cs, color);
+        countDiagonallyUpAdvanced(cs, color);
     }
 }

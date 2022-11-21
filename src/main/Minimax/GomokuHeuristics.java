@@ -1,6 +1,8 @@
 package Minimax;
 
+import Board.ConsecutiveAdvStones;
 import Board.ConsecutiveStones;
+import Board.ConsecutiveStonesType;
 
 public class GomokuHeuristics implements IHeuristics {
     HeuristicsParameters parameters;
@@ -53,5 +55,15 @@ public class GomokuHeuristics implements IHeuristics {
                 + opponentsCs.getFoursOneEdge() * parameters.opponentsFoursOneEdge
                 + opponentsCs.getFoursTwoEdges() * parameters.opponentsFoursTwoEdges
                 + opponentsCs.getFives() * parameters.opponentsFives);
+    }
+
+    @Override
+    public ConsecutiveStonesType getConsecutiveStonesType() {
+        return ConsecutiveStonesType.SIMPLE;
+    }
+
+    @Override
+    public int evaluateAdvanced(ConsecutiveAdvStones playersCas, ConsecutiveAdvStones opponentsCas) {
+        return 0;
     }
 }

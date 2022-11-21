@@ -1,6 +1,8 @@
 package Minimax;
 
+import Board.ConsecutiveAdvStones;
 import Board.ConsecutiveStones;
+import Board.ConsecutiveStonesType;
 
 public class TestHeuristics implements IHeuristics {
     @Override
@@ -19,5 +21,15 @@ public class TestHeuristics implements IHeuristics {
                 + opponentsCs.getFoursOneEdge() * 10000
                 + opponentsCs.getFoursTwoEdges() * 5000000
                 + opponentsCs.getFives() * Integer.MAX_VALUE);
+    }
+
+    @Override
+    public ConsecutiveStonesType getConsecutiveStonesType() {
+        return ConsecutiveStonesType.SIMPLE;
+    }
+
+    @Override
+    public int evaluateAdvanced(ConsecutiveAdvStones playersCas, ConsecutiveAdvStones opponentsCas) {
+        return 0;
     }
 }
