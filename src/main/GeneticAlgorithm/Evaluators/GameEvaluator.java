@@ -1,7 +1,7 @@
 package GeneticAlgorithm.Evaluators;
 
 import Game.AIsGameResult;
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -13,7 +13,7 @@ public class GameEvaluator implements IEvaluator{
     boolean [] isChecked = new boolean[numberOfGames];
 
     @Override
-    public int[] evaluate(HeuristicsParameters[] heuristics){
+    public int[] evaluate(IHeuristicsParameters[] heuristics){
         Arrays.fill(isChecked,false);
         int populationSize = heuristics.length;
         int[] evaluation = new int[populationSize];

@@ -2,12 +2,14 @@ package GeneticAlgorithm.Evaluators;
 
 import Game.AIsGame;
 import Game.AIsGameResult;
+import Minimax.AdvancedHeuristicsParameters;
 import Minimax.GomokuHeuristics;
 import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 public class GameThread extends Thread{
-    HeuristicsParameters parameters1;
-    HeuristicsParameters parameters2;
+    IHeuristicsParameters parameters1;
+    IHeuristicsParameters parameters2;
     int parametersIndex1;
     int parametersIndex2;
     GameEvaluator gameEvaluator;
@@ -15,8 +17,8 @@ public class GameThread extends Thread{
     boolean done = false;
     int threadNumber;
 
-    public void setGameThread(HeuristicsParameters parameters1,
-                              HeuristicsParameters parameters2,
+    public void setGameThread(IHeuristicsParameters parameters1,
+                              IHeuristicsParameters parameters2,
                               int parametersIndex1,
                               int parametersIndex2,
                               GameEvaluator gameEvaluator,
@@ -31,8 +33,16 @@ public class GameThread extends Thread{
 
     @Override
     public void run(){
-        GomokuHeuristics heuristics1 = new GomokuHeuristics(parameters1);
-        GomokuHeuristics heuristics2 = new GomokuHeuristics(parameters2);
+        GomokuHeuristics heuristics1;
+        GomokuHeuristics heuristics2;
+        if(parameters1 instanceof HeuristicsParameters){
+            heuristics1 = new GomokuHeuristics((HeuristicsParameters) parameters1);
+            heuristics2 = new GomokuHeuristics((HeuristicsParameters) parameters2);
+        }
+        else{
+            heuristics1 = new GomokuHeuristics((AdvancedHeuristicsParameters) parameters1);
+            heuristics2 = new GomokuHeuristics((AdvancedHeuristicsParameters) parameters2);
+        }
         AIsGame aIsGame = new AIsGame(heuristics1, heuristics2, 15, 3);
         winner = aIsGame.run();
         done = true;

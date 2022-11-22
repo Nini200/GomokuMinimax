@@ -1,7 +1,7 @@
 package GeneticAlgorithm.Crossings;
 
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 public interface ICrossing {
-    HeuristicsParameters cross(HeuristicsParameters parameters1, HeuristicsParameters parameters2);
+    IHeuristicsParameters cross(IHeuristicsParameters parameters1, IHeuristicsParameters parameters2);
 }

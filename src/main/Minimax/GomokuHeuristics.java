@@ -7,6 +7,8 @@ import Board.ConsecutiveStonesType;
 public class GomokuHeuristics implements IHeuristics {
     HeuristicsParameters parameters;
 
+    AdvancedHeuristicsParameters advancedHeuristicsParameters;
+
     public GomokuHeuristics(HeuristicsParameters parameters) {
         this.parameters = parameters;
     }
@@ -40,6 +42,11 @@ public class GomokuHeuristics implements IHeuristics {
         this.parameters.opponentsFoursTwoEdges = opponentsFoursTwoEdges;
         this.parameters.opponentsFives = opponentsFives;
     }
+
+    public GomokuHeuristics(AdvancedHeuristicsParameters advancedHeuristicsParameters) {
+        this.advancedHeuristicsParameters = advancedHeuristicsParameters;
+    }
+
     public int evaluate(ConsecutiveStones playersCs, ConsecutiveStones opponentsCs) {
         return playersCs.getTwosOneEdge() * parameters.playersTwosOneEdge
                 + playersCs.getTwosTwoEdges() * parameters.playersTwosTwoEdges
@@ -59,7 +66,11 @@ public class GomokuHeuristics implements IHeuristics {
 
     @Override
     public ConsecutiveStonesType getConsecutiveStonesType() {
+        if (advancedHeuristicsParameters != null) {
+            return ConsecutiveStonesType.ADVANCED;
+        }
         return ConsecutiveStonesType.SIMPLE;
+
     }
 
     @Override

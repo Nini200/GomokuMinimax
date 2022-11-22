@@ -1,15 +1,17 @@
 package GeneticAlgorithm;
 
 import GeneticAlgorithm.Crossings.ICrossing;
+import Minimax.AdvancedHeuristicsParameters;
 import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class PopulationCreator {
+public class PopulationUtils {
     static Random random = new Random();
-    private static void mutate(HeuristicsParameters parameters,
+    private static void mutate(IHeuristicsParameters parameters,
                                double probability,
                                double size){
         double randomNumber = random.nextDouble();
@@ -19,26 +21,31 @@ public class PopulationCreator {
             parameters.mutateParameter(parameterToMutate, size, isNegative);
         }
     }
-    public static HeuristicsParameters[] getRandomPopulation(int populationSize){
-        HeuristicsParameters[] population = new HeuristicsParameters[populationSize];
+    public static IHeuristicsParameters[] getRandomPopulation(int populationSize, boolean isAdvanced){
+        IHeuristicsParameters[] population = new IHeuristicsParameters[populationSize];
         for (int i = 0; i < populationSize; i++) {
-            population[i]=HeuristicsParameters.getRandomParameters(random);
+            if(!isAdvanced){
+                population[i]= HeuristicsParameters.getRandomParameters(random);
+            }
+            else {
+                population[i] = AdvancedHeuristicsParameters.getRandomParameters(random);
+            }
         }
         return population;
     }
-    public static HeuristicsParameters getChild(HeuristicsParameters parent1,
-                                                HeuristicsParameters parent2,
+    public static IHeuristicsParameters getChild(IHeuristicsParameters parent1,
+                                                IHeuristicsParameters parent2,
                                                 ICrossing crossing,
                                                 double probability,
                                                 double size){
-        HeuristicsParameters newHeuristics = crossing.cross(parent1, parent2);
+        IHeuristicsParameters newHeuristics = crossing.cross(parent1, parent2);
         mutate(newHeuristics, probability, size);
         return newHeuristics;
     }
 
-    public static void writePopulationToFile(HeuristicsParameters[] population, String logName) throws IOException {
+    public static void writePopulationToFile(IHeuristicsParameters[] population, String logName) throws IOException {
         FileWriter fileWriter = new FileWriter(logName, false);
-        for (HeuristicsParameters parameters : population) {
+        for (IHeuristicsParameters parameters : population) {
             try {
                 fileWriter.append(parameters.toPrint());
                 fileWriter.flush();

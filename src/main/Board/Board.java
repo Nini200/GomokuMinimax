@@ -870,7 +870,7 @@ public class Board {
                         j += increaseIJ;
                     }
 
-                    if (i == boardSize || boardMatrix[i][j] != Color.BLANK) {
+                    if (i >= boardSize || boardMatrix[i][j] != Color.BLANK) {
                         openEnds--;
                     }
                     cs.addAdvancedConsecutiveStones(stones, openEnds, shape);
@@ -1038,7 +1038,7 @@ public class Board {
                     }
 
 
-                    if (j == boardSize || boardMatrix[i][j] != Color.BLANK) {
+                    if (j >= boardSize || boardMatrix[i][j] != Color.BLANK) {
                         openEnds--;
                     }
                     cs.addAdvancedConsecutiveStones(stones, openEnds, shape);
@@ -1207,7 +1207,7 @@ public class Board {
                         j += changeIJ;
                     }
 
-                    if (i == -1 || boardMatrix[i][j] != Color.BLANK) {
+                    if (i <= -1 || boardMatrix[i][j] != Color.BLANK) {
                         openEnds--;
                     }
                     cs.addAdvancedConsecutiveStones(stones, openEnds, shape);
@@ -1374,7 +1374,7 @@ public class Board {
                         j += changeIJ;
                     }
 
-                    if (j == boardSize || boardMatrix[i][j] != Color.BLANK) {
+                    if (j >= boardSize || boardMatrix[i][j] != Color.BLANK) {
                         openEnds--;
                     }
                     cs.addAdvancedConsecutiveStones(stones, openEnds, shape);

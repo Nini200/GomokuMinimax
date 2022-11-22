@@ -1,10 +1,10 @@
 package GeneticAlgorithm.Crossings;
 
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 public class FirstHalfSwapCrossing implements ICrossing{
     @Override
-    public HeuristicsParameters cross(HeuristicsParameters parameters1, HeuristicsParameters parameters2) {
+    public IHeuristicsParameters cross(IHeuristicsParameters parameters1, IHeuristicsParameters parameters2) {
         return parameters1.swapFirstHalf(parameters2);
     }
 }

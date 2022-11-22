@@ -2,7 +2,7 @@ package Minimax;
 
 import java.util.Random;
 
-public class HeuristicsParameters {
+public class HeuristicsParameters implements IHeuristicsParameters{
     int playersTwosOneEdge;
     int playersTwosTwoEdges;
     int playersThreesOneEdge;
@@ -116,6 +116,16 @@ public class HeuristicsParameters {
                 random.nextInt() & Integer.MAX_VALUE,
                 random.nextInt() & Integer.MAX_VALUE,
                 random.nextInt() & Integer.MAX_VALUE);
+    }
+
+    @Override
+    public IHeuristicsParameters swapSecondHalf(IHeuristicsParameters parameters2) {
+        return swapSecondHalf((HeuristicsParameters) parameters2);
+    }
+
+    @Override
+    public IHeuristicsParameters swapFirstHalf(IHeuristicsParameters parameters2) {
+        return swapFirstHalf((HeuristicsParameters) parameters2);
     }
 
     public String toPrint(){

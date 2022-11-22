@@ -3,45 +3,53 @@ package GeneticAlgorithm;
 import GeneticAlgorithm.Choosers.AbstractChooser;
 import GeneticAlgorithm.Crossings.ICrossing;
 import GeneticAlgorithm.Evaluators.IEvaluator;
+import GeneticAlgorithm.PopulationCreators.IPopulationCreator;
 import GeneticAlgorithm.StopConditions.IStopCondition;
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 import java.io.IOException;
 
 public class GeneticAlgorithm {
     ICrossing crossing;
     IEvaluator evaluator;
-    HeuristicsParameters[] population;
+    IHeuristicsParameters[] population;
     int populationSize;
     IStopCondition stopCondition;
     AbstractChooser chooser;
     private final double mutationProbability;
     private final double mutationSize;
 
-    public GeneticAlgorithm (ICrossing crossing,
-                             IEvaluator evaluator,
-                             IStopCondition stopCondition,
-                             int populationSize,
-                             AbstractChooser chooser,
-                             double mutationProbability,
-                             double mutationSize){
+    private final IPopulationCreator populationCreator;
+
+    public GeneticAlgorithm(ICrossing crossing,
+                            IEvaluator evaluator,
+                            IStopCondition stopCondition,
+                            int populationSize,
+                            boolean isAdvanced,
+                            AbstractChooser chooser,
+                            double mutationProbability,
+                            double mutationSize,
+                            IPopulationCreator populationCreator) {
         this.crossing = crossing;
         this.evaluator = evaluator;
         this.stopCondition = stopCondition;
         this.populationSize = populationSize;
         this.chooser = chooser;
-        this.population = PopulationCreator.getRandomPopulation(populationSize);
+        this.population = PopulationUtils.getRandomPopulation(populationSize, isAdvanced);
         this.mutationProbability = mutationProbability;
         this.mutationSize = mutationSize;
+        this.populationCreator = populationCreator;
     }
-    public GeneticAlgorithm (ICrossing crossing,
-                             IEvaluator evaluator,
-                             IStopCondition stopCondition,
-                             int populationSize,
-                             AbstractChooser chooser,
-                             HeuristicsParameters [] startPopulation,
-                             double mutationProbability,
-                             double mutationSize){
+
+    public GeneticAlgorithm(ICrossing crossing,
+                            IEvaluator evaluator,
+                            IStopCondition stopCondition,
+                            int populationSize,
+                            AbstractChooser chooser,
+                            IHeuristicsParameters[] startPopulation,
+                            double mutationProbability,
+                            double mutationSize,
+                            IPopulationCreator populationCreator) {
         this.crossing = crossing;
         this.evaluator = evaluator;
         this.stopCondition = stopCondition;
@@ -50,31 +58,33 @@ public class GeneticAlgorithm {
         this.population = startPopulation;
         this.mutationProbability = mutationProbability;
         this.mutationSize = mutationSize;
+        this.populationCreator = populationCreator;
     }
 
-    private HeuristicsParameters findBestParameters(HeuristicsParameters[] population,
+    private IHeuristicsParameters findBestParameters(IHeuristicsParameters[] population,
                                                     int[] evaluation,
                                                     int populationSize) {
         int parametersIndex = 0;
         int bestEvaluation = evaluation[0];
-        for (int i = 1; i<populationSize; i++){
-            if(evaluation[i]>bestEvaluation){
+        for (int i = 1; i < populationSize; i++) {
+            if (evaluation[i] > bestEvaluation) {
                 parametersIndex = i;
             }
         }
         return population[parametersIndex];
     }
-    public HeuristicsParameters run(String logName) throws IOException {
+
+    public IHeuristicsParameters run(String logName) throws IOException {
         stopCondition.setup();
         chooser.setup(populationSize);
-        int [] evaluation = evaluator.evaluate(population);
-        while (!stopCondition.shouldStop()){
+        int[] evaluation = evaluator.evaluate(population);
+        while (!stopCondition.shouldStop()) {
             chooser.updateChooser(evaluation);
-            HeuristicsParameters[] newPopulation = new HeuristicsParameters[populationSize];
-            for (int i = 0; i < populationSize; i++){
+            IHeuristicsParameters[] newPopulation = new IHeuristicsParameters[populationSize];
+            for (int i = 0; i < populationSize; i++) {
                 int firstParent = chooser.choose();
                 int secondParent = chooser.choose();
-                newPopulation[i] = PopulationCreator.getChild(
+                newPopulation[i] = PopulationUtils.getChild(
                         population[firstParent],
                         population[secondParent],
                         crossing,
@@ -82,8 +92,8 @@ public class GeneticAlgorithm {
                         mutationSize
                 );
             }
-            population = newPopulation;
-            PopulationCreator.writePopulationToFile(population, logName);
+            population = populationCreator.genNewPopulation(population, newPopulation);
+            PopulationUtils.writePopulationToFile(population, logName);
             evaluation = evaluator.evaluate(population);
             stopCondition.next();
         }

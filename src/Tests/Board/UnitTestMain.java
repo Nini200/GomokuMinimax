@@ -4,8 +4,9 @@ import GeneticAlgorithm.Choosers.RouletteChooser;
 import GeneticAlgorithm.Crossings.FirstHalfSwapCrossing;
 import GeneticAlgorithm.Evaluators.GameEvaluator;
 import GeneticAlgorithm.GeneticAlgorithm;
+import GeneticAlgorithm.PopulationCreators.OnlyNewPopulationCreator;
 import GeneticAlgorithm.StopConditions.IterationsStopCondition;
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 import java.io.IOException;
 
@@ -14,12 +15,14 @@ public class UnitTestMain {
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
                 new FirstHalfSwapCrossing(),
                 new GameEvaluator(),
-                new IterationsStopCondition(30),
-                50,
+                new IterationsStopCondition(2),
+                10,
+                true,
                 new RouletteChooser(),
                 0.5,
-                0.1);
-        HeuristicsParameters best = null;
+                0.1,
+                new OnlyNewPopulationCreator());
+        IHeuristicsParameters best = null;
         try {
             best = geneticAlgorithm.run("testRun1.txt");
         } catch (IOException e) {

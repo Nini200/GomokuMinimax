@@ -1,7 +1,8 @@
 package GeneticAlgorithm.Evaluators;
 
-import Minimax.HeuristicsParameters;
+import Minimax.IHeuristicsParameters;
 
 public interface IEvaluator {
-    int[] evaluate(HeuristicsParameters[] heuristics);
+    int[] evaluate(IHeuristicsParameters[] heuristics);
+
 }
