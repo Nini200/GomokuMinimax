@@ -43,8 +43,9 @@ public class PopulationUtils {
         return newHeuristics;
     }
 
-    public static void writePopulationToFile(IHeuristicsParameters[] population, String logName) throws IOException {
+    public static void writePopulationToFile(IHeuristicsParameters[] population, int numOfPopulation, String logName) throws IOException {
         FileWriter fileWriter = new FileWriter(logName, false);
+        fileWriter.append(numOfPopulation + "\n");
         for (IHeuristicsParameters parameters : population) {
             try {
                 fileWriter.append(parameters.toPrint());
@@ -55,6 +56,16 @@ public class PopulationUtils {
         }
     }
 
+    public static void writeBestToFile(IHeuristicsParameters best, int eval, String logName) throws IOException {
+        FileWriter fileWriter = new FileWriter(logName, false);
+        try {
+            fileWriter.append(best.toPrint());
+            fileWriter.append("\n" + eval);
+            fileWriter.flush();
+        } catch (IOException e) {
+            System.err.print(e.getMessage());
+        }
+    }
 //    public HeuristicsParameters[] readPopulationFromFile(String fileName, int populationSize) {
 //        Scanner
 //    }

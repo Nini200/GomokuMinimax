@@ -9,7 +9,7 @@ import java.util.Random;
 public class GameEvaluator implements IEvaluator{
     boolean areAllChecked = false;
     Random random = new Random();
-    int numberOfGames = 10;
+    int numberOfGames = 20;
     boolean [] isChecked = new boolean[numberOfGames];
 
     @Override

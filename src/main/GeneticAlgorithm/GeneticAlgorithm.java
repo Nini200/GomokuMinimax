@@ -4,6 +4,7 @@ import GeneticAlgorithm.Choosers.AbstractChooser;
 import GeneticAlgorithm.Crossings.ICrossing;
 import GeneticAlgorithm.Evaluators.IEvaluator;
 import GeneticAlgorithm.PopulationCreators.IPopulationCreator;
+import GeneticAlgorithm.PopulationCreators.PopulationCreatorResult;
 import GeneticAlgorithm.StopConditions.IStopCondition;
 import Minimax.IHeuristicsParameters;
 
@@ -61,7 +62,7 @@ public class GeneticAlgorithm {
         this.populationCreator = populationCreator;
     }
 
-    private IHeuristicsParameters findBestParameters(IHeuristicsParameters[] population,
+    private int findBestParameters(IHeuristicsParameters[] population,
                                                     int[] evaluation,
                                                     int populationSize) {
         int parametersIndex = 0;
@@ -71,13 +72,16 @@ public class GeneticAlgorithm {
                 parametersIndex = i;
             }
         }
-        return population[parametersIndex];
+        return parametersIndex;
     }
 
     public IHeuristicsParameters run(String logName) throws IOException {
         stopCondition.setup();
         chooser.setup(populationSize);
         int[] evaluation = evaluator.evaluate(population);
+        int[] newEvaluation;
+        PopulationCreatorResult populationCreatorResult;
+        int populationNumber = 0;
         while (!stopCondition.shouldStop()) {
             chooser.updateChooser(evaluation);
             IHeuristicsParameters[] newPopulation = new IHeuristicsParameters[populationSize];
@@ -92,12 +96,17 @@ public class GeneticAlgorithm {
                         mutationSize
                 );
             }
-            population = populationCreator.genNewPopulation(population, newPopulation);
-            PopulationUtils.writePopulationToFile(population, logName);
-            evaluation = evaluator.evaluate(population);
+            newEvaluation = evaluator.evaluate(newPopulation);
+            populationCreatorResult = populationCreator.genNewPopulation(population, newPopulation, evaluation, newEvaluation);
+            population = populationCreatorResult.getPopulation();
+            evaluation = populationCreatorResult.getEvaluation();
+            populationNumber++;
+            PopulationUtils.writePopulationToFile(population, populationNumber, logName + "_pop.txt");
             stopCondition.next();
         }
-        return findBestParameters(population, evaluation, populationSize);
+        int bestIndex = findBestParameters(population, evaluation, populationSize);
+        PopulationUtils.writeBestToFile(population[bestIndex], evaluation[bestIndex], logName + "_result.txt");
+        return population[bestIndex];
     }
 
 
