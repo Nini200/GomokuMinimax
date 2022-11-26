@@ -16,4 +16,8 @@ public interface IHeuristicsParameters {
     void mutateParameter(int parameterToMutate, double size, boolean isNegative);
 
     void print();
+
+    IHeuristicsParameters swapOpenEdges(IHeuristicsParameters parameters2);
+
+    IHeuristicsParameters swapOneOpenEdge(IHeuristicsParameters parameters2);
 }

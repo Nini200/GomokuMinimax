@@ -19,7 +19,6 @@ public class ParentPercentageRoulettePopulationCreator implements IPopulationCre
         int oldPopulationSize = oldPopulation.length;
         int candidatesPopulationSize = candidates.length;
         int numberOfParents = (int) percentageOfParents * oldPopulationSize;
-        int numberOfChildren = oldPopulationSize - numberOfParents;
         ArrayList<Integer> parentIndices = new ArrayList<>();
         ArrayList<Integer> childrenIndices = new ArrayList<>();
         IHeuristicsParameters[] newPopulation = new IHeuristicsParameters[oldPopulationSize];
@@ -31,9 +30,6 @@ public class ParentPercentageRoulettePopulationCreator implements IPopulationCre
         rouletteChooser.updateChooser(oldEvaluation);
         for (int i = 0; i < numberOfParents; i++) {
             int index = rouletteChooser.choose();
-            while (parentIndices.contains(index)) {
-                index = rouletteChooser.choose();
-            }
             parentIndices.add(index);
             newPopulation[i] = oldPopulation[index];
             newEvaluation[i] = oldEvaluation[index];
@@ -43,9 +39,6 @@ public class ParentPercentageRoulettePopulationCreator implements IPopulationCre
         rouletteChooser.updateChooser(candidatesEvaluation);
         for (int i = numberOfParents; i < oldPopulationSize; i++) {
             int index = rouletteChooser.choose();
-            while (childrenIndices.contains(index)) {
-                index = rouletteChooser.choose();
-            }
             childrenIndices.add(index);
             newPopulation[i] = candidates[index];
             newEvaluation[i] = candidatesEvaluation[index];

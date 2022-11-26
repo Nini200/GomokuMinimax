@@ -270,6 +270,98 @@ public class AdvancedHeuristicsParameters implements IHeuristicsParameters{
     }
 
     @Override
+    public IHeuristicsParameters swapOneOpenEdge(IHeuristicsParameters parameters2) {
+        AdvancedHeuristicsParameters p2 = (AdvancedHeuristicsParameters) parameters2;
+        return new AdvancedHeuristicsParameters(p2.playersTwosOneEdge,
+                this.playersTwosTwoEdges,
+                p2.playersThreesOneEdge,
+                this.playersThreesTwoEdges,
+                p2.playersFoursOneEdge,
+                this.playersFoursTwoEdges,
+                this.playersFives,
+                this.playersFourHoleAfter3,
+                this.playersFourHoleAfter2,
+                this.playersThreeHoleAfter2Open2,
+                p2.playersThreeHoleAfter2Blocked1, // _OO__OX
+                p2.playersThreeHoleAfter2Blocked2, // XOO__O_
+                this.playersThreeHoles2InRow, // OO__O
+                this.playersThreeHoles2Separated, //O_O_O
+                this.playersThree2OpenMax5, // X_OOO_X
+                this.playersTwoOn5, // O___O
+                this.playersTwoOn4Open2, //_O__O_
+                p2.playersTwoOn4Open1, //XO__O_
+                this.playersTwoOn3Open2, //_O_O_
+                p2.playersTwoOn3Open1, //XO_O_
+
+                p2.opponentsTwosOneEdge,
+                this.opponentsTwosTwoEdges,
+                p2.opponentsThreesOneEdge,
+                this.opponentsThreesTwoEdges,
+                p2.opponentsFoursOneEdge,
+                this.opponentsFoursTwoEdges,
+                this.opponentsFives,
+                this.opponentsFourHoleAfter3,
+                this.opponentsFourHoleAfter2,
+                this.opponentsThreeHoleAfter2Open2,
+                p2.opponentsThreeHoleAfter2Blocked1, // _OO__OX
+                p2.opponentsThreeHoleAfter2Blocked2, // XOO__O_
+                this.opponentsThreeHoles2InRow, // OO__O
+                this.opponentsThreeHoles2Separated, //O_O_O
+                this.opponentsThree2OpenMax5, // X_OOO_X
+                this.opponentsTwoOn5, // O___O
+                this.opponentsTwoOn4Open2, //_O__O_
+                p2.opponentsTwoOn4Open1, //XO__O_
+                this.opponentsTwoOn3Open2, //_O_O_
+                p2.opponentsTwoOn3Open1 );
+    }
+
+    @Override
+    public IHeuristicsParameters swapOpenEdges(IHeuristicsParameters parameters2) {
+        AdvancedHeuristicsParameters p2 = (AdvancedHeuristicsParameters) parameters2;
+        return new AdvancedHeuristicsParameters(this.playersTwosOneEdge,
+                p2.playersTwosTwoEdges,
+                this.playersThreesOneEdge,
+                p2.playersThreesTwoEdges,
+                this.playersFoursOneEdge,
+                p2.playersFoursTwoEdges,
+                p2.playersFives,
+                p2.playersFourHoleAfter3,
+                p2.playersFourHoleAfter2,
+                p2.playersThreeHoleAfter2Open2,
+                this.playersThreeHoleAfter2Blocked1, // _OO__OX
+                this.playersThreeHoleAfter2Blocked2, // XOO__O_
+                p2.playersThreeHoles2InRow, // OO__O
+                p2.playersThreeHoles2Separated, //O_O_O
+                p2.playersThree2OpenMax5, // X_OOO_X
+                p2.playersTwoOn5, // O___O
+                p2.playersTwoOn4Open2, //_O__O_
+                this.playersTwoOn4Open1, //XO__O_
+                p2.playersTwoOn3Open2, //_O_O_
+                this.playersTwoOn3Open1, //XO_O_
+
+                this.opponentsTwosOneEdge,
+                p2.opponentsTwosTwoEdges,
+                this.opponentsThreesOneEdge,
+                p2.opponentsThreesTwoEdges,
+                this.opponentsFoursOneEdge,
+                p2.opponentsFoursTwoEdges,
+                p2.opponentsFives,
+                p2.opponentsFourHoleAfter3,
+                p2.opponentsFourHoleAfter2,
+                p2.opponentsThreeHoleAfter2Open2,
+                this.opponentsThreeHoleAfter2Blocked1, // _OO__OX
+                this.opponentsThreeHoleAfter2Blocked2, // XOO__O_
+                p2.opponentsThreeHoles2InRow, // OO__O
+                p2.opponentsThreeHoles2Separated, //O_O_O
+                p2.opponentsThree2OpenMax5, // X_OOO_X
+                p2.opponentsTwoOn5, // O___O
+                p2.opponentsTwoOn4Open2, //_O__O_
+                this.opponentsTwoOn4Open1, //XO__O_
+                p2.opponentsTwoOn3Open2, //_O_O_
+                this.opponentsTwoOn3Open1 );
+    }
+
+    @Override
     public IHeuristicsParameters swapSecondHalf(IHeuristicsParameters iParameters2) {
         AdvancedHeuristicsParameters parameters2 = (AdvancedHeuristicsParameters) iParameters2;
         return new AdvancedHeuristicsParameters(this.playersTwosOneEdge,

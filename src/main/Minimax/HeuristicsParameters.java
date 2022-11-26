@@ -147,4 +147,42 @@ public class HeuristicsParameters implements IHeuristicsParameters{
     public void print() {
         System.out.print(this.toPrint());
     }
+
+    @Override
+    public IHeuristicsParameters swapOpenEdges(IHeuristicsParameters parameters2) {
+        HeuristicsParameters p2 = (HeuristicsParameters) parameters2;
+        return new HeuristicsParameters(this.playersTwosOneEdge,
+                p2.playersTwosTwoEdges,
+                this.playersThreesOneEdge,
+                p2.playersThreesTwoEdges,
+                this.playersFoursOneEdge,
+                p2.playersFoursTwoEdges,
+                p2.playersFives,
+                this.opponentsTwosOneEdge,
+                p2.opponentsTwosTwoEdges,
+                this.opponentsThreesOneEdge,
+                p2.opponentsThreesTwoEdges,
+                this.opponentsFoursOneEdge,
+                p2.opponentsFoursTwoEdges,
+                p2.opponentsFives);
+    }
+
+    @Override
+    public IHeuristicsParameters swapOneOpenEdge(IHeuristicsParameters parameters2) {
+        HeuristicsParameters p2 = (HeuristicsParameters) parameters2;
+        return new HeuristicsParameters(p2.playersTwosOneEdge,
+                this.playersTwosTwoEdges,
+                p2.playersThreesOneEdge,
+                this.playersThreesTwoEdges,
+                p2.playersFoursOneEdge,
+                this.playersFoursTwoEdges,
+                this.playersFives,
+                p2.opponentsTwosOneEdge,
+                this.opponentsTwosTwoEdges,
+                p2.opponentsThreesOneEdge,
+                this.opponentsThreesTwoEdges,
+                p2.opponentsFoursOneEdge,
+                this.opponentsFoursTwoEdges,
+                this.opponentsFives);
+    }
 }
