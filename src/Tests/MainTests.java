@@ -125,7 +125,7 @@ public class MainTests {
             geneticAlgorithm = new GeneticAlgorithm(crossing,
                     evaluator,
                     stopCondition,
-                    populationSize,
+                    initialPopulation.length,
                     isAdvancedHeuristics,
                     chooser,
                     mutationProbability,
