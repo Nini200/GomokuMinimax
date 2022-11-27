@@ -6,22 +6,26 @@ import GeneticAlgorithm.Evaluators.GameEvaluator;
 import GeneticAlgorithm.GeneticAlgorithm;
 import GeneticAlgorithm.PopulationCreators.OnlyNewPopulationCreator;
 import GeneticAlgorithm.StopConditions.IterationsStopCondition;
+import GeneticAlgorithm.PopulationFromFile;
 import Minimax.IHeuristicsParameters;
 
 import java.io.IOException;
 
 public class UnitTestMain {
     public static void main(String[] args) {
+        PopulationFromFile pff = new PopulationFromFile("/home/hp/Pulpit/GomokuMinimax/nullnullnullnullnullnullnullnull_pop.txt", false);
+        pff.readFromFileWithIterations();
         GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(
                 new FirstHalfSwapCrossing(),
                 new GameEvaluator(),
                 new IterationsStopCondition(2),
-                10,
-                true,
+                pff.getPopulation().length,
+                false,
                 new RouletteChooser(),
-                0.5,
+                0.05,
                 0.1,
-                new OnlyNewPopulationCreator());
+                new OnlyNewPopulationCreator(),
+                pff.getPopulation());
         IHeuristicsParameters best = null;
         try {
             best = geneticAlgorithm.run("testRun1.txt");

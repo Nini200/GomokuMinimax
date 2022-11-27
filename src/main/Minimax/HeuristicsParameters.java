@@ -53,12 +53,12 @@ public class HeuristicsParameters implements IHeuristicsParameters{
         if (ints.length % 7 != 0) {
             throw new RuntimeException("Wrong number of parameters");
         }
-        int sizeOfPopulation = ints.length/7;
+        int sizeOfPopulation = ints.length/14;
         IHeuristicsParameters[] population = new HeuristicsParameters[sizeOfPopulation];
         for (int i = 0; i < sizeOfPopulation; i++) {
-            int[] heuristicParameters = new int[7];
-            for (int j = 0; j < 7; j++) {
-                heuristicParameters[j] = ints[i*7 + j];
+            int[] heuristicParameters = new int[14];
+            for (int j = 0; j < 14; j++) {
+                heuristicParameters[j] = ints[i*14 + j];
             }
             population[i] = HeuristicsParameters.makeFromArray(heuristicParameters);
         }
