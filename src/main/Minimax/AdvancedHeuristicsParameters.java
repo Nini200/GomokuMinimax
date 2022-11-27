@@ -171,6 +171,65 @@ public class AdvancedHeuristicsParameters implements IHeuristicsParameters{
                 random.nextInt() & Integer.MAX_VALUE);
     }
 
+    public static IHeuristicsParameters[] getPopulationFromArray(int[] ints) {
+        if (ints.length % 40 != 0) {
+            throw new RuntimeException("Wrong number of parameters");
+        }
+        int sizeOfPopulation = ints.length/40;
+        IHeuristicsParameters[] population = new AdvancedHeuristicsParameters[sizeOfPopulation];
+        for (int i = 0; i < sizeOfPopulation; i++) {
+            int[] heuristicParameters = new int[40];
+            for (int j = 0; j < 40; j++) {
+                heuristicParameters[j] = ints[i*40 + j];
+            }
+            population[i] = AdvancedHeuristicsParameters.makeFromArray(heuristicParameters);
+        }
+        return population;
+    }
+
+    private static AdvancedHeuristicsParameters makeFromArray(int[] heuristicParameters) {
+        return new AdvancedHeuristicsParameters(heuristicParameters[0],
+                heuristicParameters[1],
+                heuristicParameters[2],
+                heuristicParameters[3],
+                heuristicParameters[4],
+                heuristicParameters[5],
+                heuristicParameters[6],
+                heuristicParameters[7],
+                heuristicParameters[8],
+                heuristicParameters[9],
+                heuristicParameters[10],
+                heuristicParameters[11],
+                heuristicParameters[12],
+                heuristicParameters[13],
+                heuristicParameters[14],
+                heuristicParameters[15],
+                heuristicParameters[16],
+                heuristicParameters[17],
+                heuristicParameters[18],
+                heuristicParameters[19],
+                heuristicParameters[20],
+                heuristicParameters[21],
+                heuristicParameters[22],
+                heuristicParameters[23],
+                heuristicParameters[24],
+                heuristicParameters[25],
+                heuristicParameters[26],
+                heuristicParameters[27],
+                heuristicParameters[28],
+                heuristicParameters[29],
+                heuristicParameters[30],
+                heuristicParameters[31],
+                heuristicParameters[32],
+                heuristicParameters[33],
+                heuristicParameters[34],
+                heuristicParameters[35],
+                heuristicParameters[36],
+                heuristicParameters[37],
+                heuristicParameters[38],
+                heuristicParameters[39]);
+    }
+
     @Override
     public String toPrint() {
         return this.playersTwosOneEdge + "\n"

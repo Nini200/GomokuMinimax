@@ -49,6 +49,39 @@ public class HeuristicsParameters implements IHeuristicsParameters{
         this.opponentsFives = opponentsFives;
     }
 
+    public static IHeuristicsParameters[] getPopulationFromArray(int[] ints) {
+        if (ints.length % 7 != 0) {
+            throw new RuntimeException("Wrong number of parameters");
+        }
+        int sizeOfPopulation = ints.length/7;
+        IHeuristicsParameters[] population = new HeuristicsParameters[sizeOfPopulation];
+        for (int i = 0; i < sizeOfPopulation; i++) {
+            int[] heuristicParameters = new int[7];
+            for (int j = 0; j < 7; j++) {
+                heuristicParameters[j] = ints[i*7 + j];
+            }
+            population[i] = HeuristicsParameters.makeFromArray(heuristicParameters);
+        }
+        return population;
+    }
+
+    private static IHeuristicsParameters makeFromArray(int[] heuristicParameters) {
+        return new HeuristicsParameters(heuristicParameters[0],
+                heuristicParameters[1],
+                heuristicParameters[2],
+                heuristicParameters[3],
+                heuristicParameters[4],
+                heuristicParameters[5],
+                heuristicParameters[6],
+                heuristicParameters[7],
+                heuristicParameters[8],
+                heuristicParameters[9],
+                heuristicParameters[10],
+                heuristicParameters[11],
+                heuristicParameters[12],
+                heuristicParameters[13]);
+    }
+
     public HeuristicsParameters swapFirstHalf(HeuristicsParameters parameters2){
         return new HeuristicsParameters(parameters2.playersTwosOneEdge,
                 parameters2.playersTwosTwoEdges,

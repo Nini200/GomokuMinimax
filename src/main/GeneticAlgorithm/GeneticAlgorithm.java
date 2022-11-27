@@ -46,11 +46,12 @@ public class GeneticAlgorithm {
                             IEvaluator evaluator,
                             IStopCondition stopCondition,
                             int populationSize,
+                            boolean isAdvanced,
                             AbstractChooser chooser,
-                            IHeuristicsParameters[] startPopulation,
                             double mutationProbability,
                             double mutationSize,
-                            IPopulationCreator populationCreator) {
+                            IPopulationCreator populationCreator,
+                            IHeuristicsParameters[] startPopulation) {
         this.crossing = crossing;
         this.evaluator = evaluator;
         this.stopCondition = stopCondition;

@@ -14,6 +14,7 @@ import GeneticAlgorithm.PopulationCreators.ParentPercentageRoulettePopulationCre
 import GeneticAlgorithm.StopConditions.IStopCondition;
 import GeneticAlgorithm.StopConditions.IterationsStopCondition;
 import GeneticAlgorithm.StopConditions.TimeStopCondition;
+import GeneticAlgorithm.PopulationFromFile;
 import Minimax.IHeuristicsParameters;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class MainTests {
         String ps = System.getProperty("ps");
         String mp = System.getProperty("mp");
         String ms = System.getProperty("ms");
+        String ip = System.getProperty("ip"); //Initial Population
 
         if(cr != null){
             switch (cr){
@@ -101,15 +103,37 @@ public class MainTests {
 
         String fileLogName = ps + pc + sc + cr + ch + mp + ms + ah;
 
-        GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm(crossing,
-                evaluator,
-                stopCondition,
-                populationSize,
-                isAdvancedHeuristics,
-                chooser,
-                mutationProbability,
-                mutationSize,
-                populationCreator);
+        GeneticAlgorithm geneticAlgorithm;
+
+        if (ip == null) {
+            geneticAlgorithm = new GeneticAlgorithm(crossing,
+                    evaluator,
+                    stopCondition,
+                    populationSize,
+                    isAdvancedHeuristics,
+                    chooser,
+                    mutationProbability,
+                    mutationSize,
+                    populationCreator);
+        }
+        else{
+            String file = System.getProperty("file");
+            PopulationFromFile populationFromFile = new PopulationFromFile(file, isAdvancedHeuristics);
+            populationFromFile.readFromFileWithIterations();
+            IHeuristicsParameters[] initialPopulation = populationFromFile.getPopulation();
+
+            geneticAlgorithm = new GeneticAlgorithm(crossing,
+                    evaluator,
+                    stopCondition,
+                    populationSize,
+                    isAdvancedHeuristics,
+                    chooser,
+                    mutationProbability,
+                    mutationSize,
+                    populationCreator,
+                    initialPopulation);
+        }
+
         IHeuristicsParameters best = null;
 
         try {
