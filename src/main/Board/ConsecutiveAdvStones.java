@@ -49,4 +49,56 @@ public class ConsecutiveAdvStones extends ConsecutiveStones{
             case TwoOn3Open1 -> this. twoOn3Open1++;
         }
     }
+
+    public int getFourHoleAfter3() {
+        return fourHoleAfter3;
+    }
+
+    public int getFourHoleAfter2() {
+        return fourHoleAfter2;
+    }
+
+    public int getThreeHoleAfter2Open2() {
+        return threeHoleAfter2Open2;
+    }
+
+    public int getThreeHoleAfter2Blocked1() {
+        return threeHoleAfter2Blocked1;
+    }
+
+    public int getThreeHoleAfter2Blocked2() {
+        return threeHoleAfter2Blocked2;
+    }
+
+    public int getThreeHoles2InRow() {
+        return threeHoles2InRow;
+    }
+
+    public int getThreeHoles2Separated() {
+        return threeHoles2Separated;
+    }
+
+    public int getThree2OpenMax5() {
+        return three2OpenMax5;
+    }
+
+    public int getTwoOn5() {
+        return twoOn5;
+    }
+
+    public int getTwoOn4Open2() {
+        return twoOn4Open2;
+    }
+
+    public int getTwoOn4Open1() {
+        return twoOn4Open1;
+    }
+
+    public int getTwoOn3Open2() {
+        return twoOn3Open2;
+    }
+
+    public int getTwoOn3Open1() {
+        return twoOn3Open1;
+    }
 }

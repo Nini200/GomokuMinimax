@@ -75,6 +75,48 @@ public class GomokuHeuristics implements IHeuristics {
 
     @Override
     public int evaluateAdvanced(ConsecutiveAdvStones playersCas, ConsecutiveAdvStones opponentsCas) {
-        return 0;
+
+        return playersCas.getFourHoleAfter2() * advancedHeuristicsParameters.playersFourHoleAfter2
+                + playersCas.getFourHoleAfter3() * advancedHeuristicsParameters.playersFourHoleAfter3
+                + playersCas.getThree2OpenMax5() * advancedHeuristicsParameters.playersThree2OpenMax5
+                + playersCas.getThreeHoleAfter2Blocked1() * advancedHeuristicsParameters.playersThreeHoleAfter2Blocked1
+                + playersCas.getThreeHoleAfter2Blocked2() * advancedHeuristicsParameters.playersThreeHoleAfter2Blocked2
+                + playersCas.getThreeHoleAfter2Open2() * advancedHeuristicsParameters.playersThreeHoleAfter2Open2
+                + playersCas.getThreeHoles2InRow() * advancedHeuristicsParameters.playersThreeHoles2InRow
+                + playersCas.getThreeHoles2Separated() * advancedHeuristicsParameters.playersThreeHoles2Separated
+                + playersCas.getTwoOn3Open1() * advancedHeuristicsParameters.playersTwoOn3Open1
+                + playersCas.getTwoOn3Open2() * advancedHeuristicsParameters.playersTwoOn3Open2
+                + playersCas.getTwoOn4Open1() * advancedHeuristicsParameters.playersTwoOn4Open1
+                + playersCas.getTwoOn4Open2() * advancedHeuristicsParameters.playersTwoOn4Open2
+                + playersCas.getTwoOn5() * advancedHeuristicsParameters.opponentsTwoOn5
+                + playersCas.getFives() * advancedHeuristicsParameters.playersFives
+                + playersCas.getFoursTwoEdges() * advancedHeuristicsParameters.playersFoursTwoEdges
+                + playersCas.getFoursOneEdge() * advancedHeuristicsParameters.playersFoursOneEdge
+                + playersCas.getThreesTwoEdges() * advancedHeuristicsParameters.playersThreesTwoEdges
+                + playersCas.getThreesOneEdge() * advancedHeuristicsParameters.playersThreesOneEdge
+                + playersCas.getTwosTwoEdges() * advancedHeuristicsParameters.playersTwosTwoEdges
+                + playersCas.getTwosOneEdge() * advancedHeuristicsParameters.playersTwosOneEdge
+                -
+                (opponentsCas.getFourHoleAfter2() * advancedHeuristicsParameters.opponentsFourHoleAfter2
+                + opponentsCas.getFourHoleAfter3() * advancedHeuristicsParameters.opponentsFourHoleAfter3
+                + opponentsCas.getThree2OpenMax5() * advancedHeuristicsParameters.opponentsThree2OpenMax5
+                + opponentsCas.getThreeHoleAfter2Blocked1() * advancedHeuristicsParameters.opponentsThreeHoleAfter2Blocked1
+                + opponentsCas.getThreeHoleAfter2Blocked2() * advancedHeuristicsParameters.opponentsThreeHoleAfter2Blocked2
+                + opponentsCas.getThreeHoleAfter2Open2() * advancedHeuristicsParameters.opponentsThreeHoleAfter2Open2
+                + opponentsCas.getThreeHoles2InRow() * advancedHeuristicsParameters.opponentsThreeHoles2InRow
+                + opponentsCas.getThreeHoles2Separated() * advancedHeuristicsParameters.opponentsThreeHoles2Separated
+                + opponentsCas.getTwoOn3Open1() * advancedHeuristicsParameters.opponentsTwoOn3Open1
+                + opponentsCas.getTwoOn3Open2() * advancedHeuristicsParameters.opponentsTwoOn3Open2
+                + opponentsCas.getTwoOn4Open1() * advancedHeuristicsParameters.opponentsTwoOn4Open1
+                + opponentsCas.getTwoOn4Open2() * advancedHeuristicsParameters.opponentsTwoOn4Open2
+                + opponentsCas.getTwoOn5() * advancedHeuristicsParameters.opponentsTwoOn5
+                + opponentsCas.getFives() * advancedHeuristicsParameters.opponentsFives
+                + opponentsCas.getFoursTwoEdges() * advancedHeuristicsParameters.opponentsFoursTwoEdges
+                + opponentsCas.getFoursOneEdge() * advancedHeuristicsParameters.opponentsFoursOneEdge
+                + opponentsCas.getThreesTwoEdges() * advancedHeuristicsParameters.opponentsThreesTwoEdges
+                + opponentsCas.getThreesOneEdge() * advancedHeuristicsParameters.opponentsThreesOneEdge
+                + opponentsCas.getTwosTwoEdges() * advancedHeuristicsParameters.opponentsTwosTwoEdges
+                + opponentsCas.getTwosOneEdge() * advancedHeuristicsParameters.opponentsTwosOneEdge);
+
     }
 }

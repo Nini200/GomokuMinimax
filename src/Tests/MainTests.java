@@ -1,9 +1,6 @@
 import GeneticAlgorithm.Choosers.AbstractChooser;
 import GeneticAlgorithm.Choosers.RouletteChooser;
-import GeneticAlgorithm.Crossings.FirstHalfSwapCrossing;
-import GeneticAlgorithm.Crossings.ICrossing;
-import GeneticAlgorithm.Crossings.NoCrossing;
-import GeneticAlgorithm.Crossings.SecondHalfSwapCrossing;
+import GeneticAlgorithm.Crossings.*;
 import GeneticAlgorithm.Evaluators.GameEvaluator;
 import GeneticAlgorithm.Evaluators.IEvaluator;
 import GeneticAlgorithm.GeneticAlgorithm;
@@ -46,6 +43,8 @@ public class MainTests {
             switch (cr){
                 case "fh" -> crossing = new FirstHalfSwapCrossing();
                 case "sh" -> crossing = new SecondHalfSwapCrossing();
+                case "to" -> crossing = new OpenEdgesSwapCrossing();
+                case "oo" -> crossing = new OneOpenEdgeSwapCrossing();
                 default -> crossing = new NoCrossing();
             }
         }
